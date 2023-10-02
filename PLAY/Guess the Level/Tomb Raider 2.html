@@ -7,7 +7,7 @@
 <body>
     <h1>TOMB RAIDER LEVEL GUESSER</h1>
     <p class="version">Beta v0.2.0</p>
-    <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change number of pictures (10)</button>
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
 
     <h2>Rules and Information:</h2>
     <ul class="rules">
@@ -22,8 +22,8 @@
         <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
     </div>
     <br>
-    <button class="checkAnswers" onclick="checkAnswers()">Check your answers</button>
-    <button class="fillWrongAnswers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
 
     <div id="result"></div>
 

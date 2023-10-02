@@ -142,7 +142,7 @@ function answerMatches(inputAnswer, correctAnswer) {
     return errors <= maxErrors;
 }
 
-function imageAmount() {
+function promptNewNumberOfImages() {
     const userPrompt = prompt('Enter the number of images you want to guess (up to 10):');
     const newNumberOfImages = parseInt(userPrompt);
     console.log(newNumberOfImages);

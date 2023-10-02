@@ -43,7 +43,7 @@ input.answer {
     background-color: #f4a19a;
 }
 
-.clue-button {
+button.clue-button {
     background-color: rgb(248, 255, 154);
     color: #000;
     border: 1mm ridge rgb(0, 64, 255);
@@ -63,7 +63,7 @@ input.answer {
     margin: 10px;
 }
 
-.checkAnswers {
+button.check-answers {
     background-color: #00ff37;
     color: #000;
     border: 0.5mm ridge #000;
@@ -74,7 +74,7 @@ input.answer {
     margin: 10px;
 }
 
-.fillWrongAnswers {
+button.fill-wrong-answers {
     background-color: #eaff00;
     color: #000;
     border: 0.5mm ridge #000;
