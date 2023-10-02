@@ -76,7 +76,7 @@ function addImagesToPage(imageEntries) {
         const inputElem = document.createElement('input');
         inputElem.type = 'text';
         inputElem.style = 'width: 300px; height: 40px';
-        inputElem.placeholder = 'Enter level name';
+        inputElem.placeholder = riddleData.type === 'ROOM' ? 'Enter room number' : 'Enter level name';
 
         const clueButton = document.createElement('button');
         clueButton.textContent = 'Get a clue';
@@ -115,7 +115,7 @@ function fillWrongAnswers() {
 
 // check if there's a mistake and how close it has to be
 function isCloseEnough(str1, str2) {
-    const maxErrors = 2; // amount of max possible mistakes
+    const maxErrors = riddleData.type === 'ROOM' ? 0 : 2; // number of max possible mistakes
     let errors = 0;
 
     for (let i = 0; i < Math.min(str1.length, str2.length); i++) {
@@ -134,11 +134,13 @@ function isCloseEnough(str1, str2) {
 }
 
 function imageAmount() {
-    let newNumberOfImages = parseInt(prompt('Enter the number of images you want to guess (up to 10):'));
-    if (newNumberOfImages === false) {
-        return;
-    } else if (isNaN(newNumberOfImages) || newNumberOfImages <= 0 || newNumberOfImages > 10) {
-        alert('Please enter a valid number between 1 and 10.');
+    const userPrompt = prompt('Enter the number of images you want to guess (up to 10):');
+    const newNumberOfImages = parseInt(userPrompt);
+    console.log(newNumberOfImages);
+    if (isNaN(newNumberOfImages) || newNumberOfImages <= 0 || newNumberOfImages > 10) {
+        if (userPrompt !== null) {
+            alert('Please enter a valid number between 1 and 10.');
+        }
         return;
     }
 
