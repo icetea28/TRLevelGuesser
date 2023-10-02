@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOMB RAIDER LEVEL GUESSER (BETA)</title>
+    <style>
+        /*coloring correct green*/
+        .correct-answer {
+            background-color: #8ce598; /* Hellgrün */
+        }
+    
+        /*coloring wrong red*/
+        .wrong-answer {
+            background-color: #f4a19a; /* Hellrot */
+        }
+
+        .clue-button {
+        background-color: rgb(248, 255, 154); /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 1mm ridge rgb(0, 64, 255);        /*<line-width> || <line-style> || <color>;*/
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px; /* Add some spacing between the button and input */
+        }
+
+        .change-amount-button {
+        background-color: #3498DB; /* Blue color */
+        color: rgb(255, 255, 255);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .checkAnswers {
+        background-color: #00ff37; /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .fillWrongAnswers {
+        background-color: #eaff00; /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1><font size=10><font color=#B404AE>TOMB RAIDER LEVEL GUESSER</font size></font color></h1>
+    <br><font size=2>Beta v0.2.1</font size>
+        <p></p>
+    <br><font size=40>credits to gui for helping out with some TR3 pictures YEP</font>
+    <br>https://www.twitch.tv/guigui0001_
+        <p></p>
+        <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change amount of pictures (10)</button>
+    <p></p>
+    <h2><b><font size="5">Rules and Information:</font></b></h2>
+    <p><font size="4"> - Enter the name of the level in the box next to each picture
+        <br> - There's a margin of 2 spelling mistakes per Answer (apostrophes like ' must not be forgotten though!)
+        <br> - Capitalization is not considered
+        <br> - You can reveal the solution for pictures you can't solve at the end 
+        <br> - If you're unsure about a level name, open levelnames.txt in the main folder to check for each exact name
+        <br>
+    </font></p>
+    
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+    <br>
+    <button class="checkAnswers" onclick="checkAnswers()">Check your Answers</button>
+    <button class="fillWrongAnswers" onclick="fillWrongAnswers()">Fill Wrong Answers</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        //EVERYTHING RELATED TO LEVELS - EDIT WHEN CHANGING PICTURES OR ADDING OR REMOVING
+            //RAW IMAGE FILES DIRECTORY
+                var imageFileNames = ["../../pictures/TR3/tr3.aldwych.1d.png", "../../pictures/TR3/tr3.aldwych.37m.png", "../../pictures/TR3/tr3.aldwych.55e.png", "../../pictures/TR3/tr3.antarc.29m.png", "../../pictures/TR3/tr3.antarc.57m.png", "../../pictures/TR3/tr3.antarc.93d.png", 
+                "../../pictures/TR3/tr3.antarc.126e.png", "../../pictures/TR3/tr3.area51.18e.png", "../../pictures/TR3/tr3.area51.96m.png", "../../pictures/TR3/tr3.cavern.5e.png", "../../pictures/TR3/tr3.cavern.12e.png", "../../pictures/TR3/tr3.cavern.27m.png", 
+                "../../pictures/TR3/tr3.city.13e.png", "../../pictures/TR3/tr3.coastal.121e.png", "../../pictures/TR3/tr3.crash.29m.png", "../../pictures/TR3/tr3.crash.72e.png", "../../pictures/TR3/tr3.ganges.58d.png", 
+                "../../pictures/TR3/tr3.ganges.100d.png", "../../pictures/TR3/tr3.hallows.21e.png", "../../pictures/TR3/tr3.jungle.83e.png", "../../pictures/TR3/tr3.jungle.103d.png", 
+                "../../pictures/TR3/tr3.kaliya.13e.png", "../../pictures/TR3/tr3.kaliya.17e.png", "../../pictures/TR3/tr3.luds.35m.png", "../../pictures/TR3/tr3.luds.37e.png", "../../pictures/TR3/tr3.luds.74d.png", 
+                "../../pictures/TR3/tr3.madubu.53d.png", "../../pictures/TR3/tr3.madubu.143e.png", "../../pictures/TR3/tr3.nevada.113e.png", "../../pictures/TR3/tr3.nevada.143e.png", "../../pictures/TR3/tr3.puna.0e.png", "../../pictures/TR3/tr3.rx.163e.png", 
+                "../../pictures/TR3/tr3.rx.178d.png", "../../pictures/TR3/tr3.temple.48e.png", "../../pictures/TR3/tr3.temple.181e.png", "../../pictures/TR3/tr3.thames.1e.png", "../../pictures/TR3/tr3.thames.13e.png", "../../pictures/TR3/tr3.thames.130m.png", 
+                "../../pictures/TR3/tr3.tinnos.15m.png", "../../pictures/TR3/tr3.tinnos.43d.png", "../../pictures/TR3/tr3.tinnos.67d.png", "../../pictures/TR3/tr3.tinnos.101e.png",
+                "../../pictures/TR3/tr3.coastal.188.18m.png", "../../pictures/TR3/tr3.hallowsd.png", "../../pictures/TR3/tr3.hsc.49.46d.png", "../../pictures/TR3/tr3.ludsm.png",
+                // added during v0.2.1
+                "../../pictures/TR3/tr3.antarc.51m.png", "../../pictures/TR3/tr3.area51.31m.png", "../../pictures/TR3/tr3.cavern.27d.png", "../../pictures/TR3/tr3.tinnos.0m.png", "../../pictures/TR3/tr3.hsc.78d.png", 
+                "../../pictures/TR3/tr3.crash.65m.png", "../../pictures/TR3/tr3.rx.146m.png", "../../pictures/TR3/tr3.city.19d.png", "../../pictures/TR3/tr3.ganges.26d.png", "../../pictures/TR3/tr3.madubu.6m.png",
+                "../../pictures/TR3/tr3.thames.5e.png", "../../pictures/TR3/tr3.aldwych.63m.png", "../../pictures/TR3/tr3.coastal.186e.png", "../../pictures/TR3/tr3.hallows.25d.png", "../../pictures/TR3/tr3.temple.200e.png",
+                "../../pictures/TR3/tr3.kaliya.7m.png", "../../pictures/TR3/tr3.luds.154m.png", "../../pictures/TR3/tr3.puna.13m.png"]; // enter file name with the file type e.g. pictures/egg.jpg
+            //CLUES FOR IMAGES
+                function getClueForImage(imageSrc) {
+                    var clueMap = {
+                        "tr3.aldwych.1d.png": "a crystal can be found in this room", 
+                        "tr3.aldwych.37m.png": "you need to pay here!", 
+                        "tr3.aldwych.55e.png": "this is kind of a 'secret' location", 
+                        "tr3.antarc.29m.png": "don't get poisoned here!", 
+                        "tr3.antarc.57m.png": "this is a 'secret' entrance", 
+                        "tr3.antarc.93d.png": "here you find an item you can use multiple times even though you need it only once", 
+                        "tr3.antarc.126e.png": "you wouldn't be able to see anything if i wouldn't have removed the crystal in this picture", 
+                        "tr3.area51.18e.png": "surprisingly there are only humans in here", 
+                        "tr3.area51.96m.png": "when you can see this texture the doors in the picture should be open", 
+                        "tr3.cavern.5e.png": "don't cross this line or you may die!", 
+                        "tr3.cavern.12e.png": "you're at the highest point of the level!", 
+                        "tr3.cavern.27m.png": "don't stare at this window or you may get burned!", 
+                        "tr3.city.13e.png": "don't stare at this or you may get struck by lightnings!", 
+                        "tr3.coastal.121e.png": "some nice unique red stones can be found in this area", 
+                        "tr3.coastal.188.18m.png": "same area used twice, but is it the end of the first or the start of the second level?", 
+                        "tr3.crash.29e.png": "a room without any purpose", 
+                        "tr3.crash.72e.png": "getting burned is your least concern - don't get eaten rather", 
+                        "tr3.ganges.58d.png": "don't run to the left or you may not see this place again", 
+                        "tr3.ganges.100d.png": "pick up a key here for the alternative route that you chose", 
+                        "tr3.hallows.21e.png": "the end?", 
+                        "tr3.hallowsd.png": "you entered here at the top, how did you miss that cross?", 
+                        "tr3.hsc.49.46d.png": "open the doors to your mates and they might help you with this", 
+                        "tr3.jungle.83e.png": "you can't see the water in the background yet", 
+                        "tr3.jungle.103d.png": "only if you actually play dev-intended here", 
+                        "tr3.kaliya.13e.png": "beware of boulders!",
+                        "tr3.kaliya.17e.png": "not only this hallway feels like a maze", 
+                        "tr3.luds.35m.png": "a wide painting in a gigantic room", 
+                        "tr3.luds.37e.png": "there are 4 of those right as you enter, how can you not know this? monkaS", 
+                        "tr3.luds.74d.png": "time to breath!", 
+                        "tr3.ludsm.png": "watch your step, it's a long drop", 
+                        "tr3.madubu.53d.png": "hidden behind a bridge", 
+                        "tr3.madubu.143d.png": "i hope you have a driving licence when you enter this", 
+                        "tr3.nevada.113e.png": "apparently Lara didn't have her drivers licence as we find out a few minutes later", 
+                        "tr3.nevada.143e.png": "you lose everything here and you don't remember this place?", 
+                        "tr3.puna.0e.png": "your face expression the first time you died to the traps in this level", 
+                        "tr3.rx.163e.png": "make sure to avoid this drill!", 
+                        "tr3.rx.178d.png": "usually you drive past that place - or die right here", 
+                        "tr3.temple.48e.png": "all of this can be avoided with a simple jump at the start", 
+                        "tr3.temple.181e.png": "a kind of 'secret' place", 
+                        "tr3.thames.1e.png": "literally the highest point in this level", 
+                        "tr3.thames.13e.png": "finally back out of the underground", 
+                        "tr3.thames.130m.png": "just a block away from the never-ending depth", 
+                        "tr3.tinnos.15m.png": "Uli is watching you here", 
+                        "tr3.tinnos.43d.png": "the top of a large bridge", 
+                        "tr3.tinnos.101e.png": "let the fight begin!",
+                        //added while working on v0.2.1
+                        "tr3.antarc.51.png": "Lara keep missing shots, as usual", 
+                        "tr3.area51.31m.png": "Lara enjoyed the can", 
+                        "tr3.cavern.27d.png": "Lara has all the artifacts in her backpack", 
+                        "tr3.tinnos.0m.png": "Could be the 5th mask", 
+                        "tr3.hsc.78d.png": "Lara can't reach this room", 
+                        "tr3.crash.65m.png": "Beware the piranhas", 
+                        "tr3.rx.146m.png": "don't slide forwards", 
+                        "tr3.city.19d.png": "There's electricity in the air here!", 
+                        "tr3.ganges.26d.png": "I won't tell you, it's a secret!", 
+                        "tr3.madubu.6m.png": "Looks like coastal village, eg? But it's not!",
+                        "tr3.thames.5e.png": "Danger is above all when there is no water", 
+                        "tr3.aldwych.63m.png": "This is a transport plan", 
+                        "tr3.coastal.186e.png": "A dangerous corridor", 
+                        "tr3.hallows.25d.png": "The very last room", 
+                        "tr3.temple.200e.png": "Block pushing is required here",
+                        "tr3.kaliya.7m.png": "Boulder is probably not the worst threat here", 
+                        "tr3.luds.154m.png": "Roasted", 
+                        "tr3.puna.13m.png": "There's a lot of deagle ammo here!",
+                    };
+                // Extract the filename from the imageSrc
+                var filename = imageSrc.split('/').pop();
+                return clueMap[filename] || "No clue available for this image. I must have forgotten it FeelsBadMan";
+                }
+        
+            //CORRECT ANSWER FOR EACH LEVEL    
+                function checkAnswers() {
+            // Clear the wrongAnswers object before checking answers
+                wrongAnswers = {};
+        
+                var correctAnswers = {
+                "../../pictures/TR3/tr3.aldwych.1d.png": "aldwych", 
+                "../../pictures/TR3/tr3.aldwych.37m.png": "aldwych", 
+                "../../pictures/TR3/tr3.aldwych.55e.png": "aldwych", 
+                "../../pictures/TR3/tr3.antarc.29m.png": "antarctica", 
+                "../../pictures/TR3/tr3.antarc.57m.png": "antarctica", 
+                "../../pictures/TR3/tr3.antarc.93d.png": "antarctica", 
+                "../../pictures/TR3/tr3.antarc.126e.png": "antarctica", 
+                "../../pictures/TR3/tr3.area51.18e.png": "area 51", 
+                "../../pictures/TR3/tr3.area51.96m.png": "area 51", 
+                "../../pictures/TR3/tr3.cavern.5e.png": "meteorite cavern", 
+                "../../pictures/TR3/tr3.cavern.12e.png": "meteorite cavern", 
+                "../../pictures/TR3/tr3.cavern.27m.png": "meteorite cavern", 
+                "../../pictures/TR3/tr3.city.13e.png": "city", 
+                "../../pictures/TR3/tr3.coastal.121e.png": "coastal village", 
+                "../../pictures/TR3/tr3.coastal.188.18m.png": "coastal village", 
+                "../../pictures/TR3/tr3.crash.29e.png": "crash site", 
+                "../../pictures/TR3/tr3.crash.72e.png": "crash site", 
+                "../../pictures/TR3/tr3.ganges.58d.png": "the river ganges", 
+                "../../pictures/TR3/tr3.ganges.100d.png": "the river ganges", 
+                "../../pictures/TR3/tr3.hallows.21e.png": "all hallows", 
+                "../../pictures/TR3/tr3.hallowsd.png": "all hallows", 
+                "../../pictures/TR3/tr3.hsc.49.46d.png": "high security compound", 
+                "../../pictures/TR3/tr3.jungle.83e.png": "jungle", 
+                "../../pictures/TR3/tr3.jungle.103d.png": "jungle", 
+                "../../pictures/TR3/tr3.kaliya.13e.png": "caves of kaliya",
+                "../../pictures/TR3/tr3.kaliya.17e.png": "caves of kaliya", 
+                "../../pictures/TR3/tr3.luds.35m.png": "lud's gate", 
+                "../../pictures/TR3/tr3.luds.37e.png": "lud's gate", 
+                "../../pictures/TR3/tr3.luds.74d.png": "lud's gate", 
+                "../../pictures/TR3/tr3.ludsm.png": "lud's gate", 
+                "../../pictures/TR3/tr3.madubu.53d.png": "madubu gorge", 
+                "../../pictures/TR3/tr3.madubu.143d.png": "madubu gorge", 
+                "../../pictures/TR3/tr3.nevada.113e.png": "nevada desert", 
+                "../../pictures/TR3/tr3.nevada.143e.png": "nevada desert", 
+                "../../pictures/TR3/tr3.puna.0e.png": "temple of puna", 
+                "../../pictures/TR3/tr3.rx.163e.png": "rx-tech mines", 
+                "../../pictures/TR3/tr3.rx.178d.png": "rx-tech mines", 
+                "../../pictures/TR3/tr3.temple.48e.png": "temple ruins", 
+                "../../pictures/TR3/tr3.temple.181e.png": "temple ruins", 
+                "../../pictures/TR3/tr3.thames.1e.png": "thames wharf", 
+                "../../pictures/TR3/tr3.thames.13e.png": "thames wharf", 
+                "../../pictures/TR3/tr3.thames.130m.png": "thames wharf", 
+                "../../pictures/TR3/tr3.tinnos.15m.png": "lost city of tinnos", 
+                "../../pictures/TR3/tr3.tinnos.43d.png": "lost city of tinnos", 
+                "../../pictures/TR3/tr3.tinnos.67d.png": "lost city of tinnos", 
+                "../../pictures/TR3/tr3.tinnos.101e.png": "lost city of tinnos",
+                // more pictures added same way, picture name with file type in first "", expected answer in second "",
+                //added during v0.2.1
+                "../../pictures/TR3/tr3.antarc.51m.png": "antarctica", 
+                "../../pictures/TR3/tr3.area51.31m.png": "area 51", 
+                "../../pictures/TR3/tr3.cavern.27d.png": "meteorite cavern", 
+                "../../pictures/TR3/tr3.tinnos.0m.png": "lost city of tinnos", 
+                "../../pictures/TR3/tr3.hsc.78d.png": "high security compound", 
+                "../../pictures/TR3/tr3.crash.65m.png": "crash site", 
+                "../../pictures/TR3/tr3.rx.146m.png": "rx-tech mines", 
+                "../../pictures/TR3/tr3.city.19d.png": "city", 
+                "../../pictures/TR3/tr3.ganges.26d.png": "the river ganges", 
+                "../../pictures/TR3/tr3.madubu.6m.png": "madubu gorge",
+                "../../pictures/TR3/tr3.thames.5e.png": "thames wharf", 
+                "../../pictures/TR3/tr3.aldwych.63m.png": "aldwych", 
+                "../../pictures/TR3/tr3.coastal.186e.png": "coastal village", 
+                "../../pictures/TR3/tr3.hallows.25d.png": "all hallows", 
+                "../../pictures/TR3/tr3.temple.200e.png": "temple ruins",
+                "../../pictures/TR3/tr3.kaliya.7m.png": "saves of kaliya", 
+                "../../pictures/TR3/tr3.luds.154m.png": "lud's gate", 
+                "../../pictures/TR3/tr3.puna.13m.png": "temple of puna",
+                };
+
+                var totalCorrect = 0;
+
+                var totalCorrect = 0;
+
+                var riddles = document.getElementsByClassName("riddle");
+                    for (var i = 0; i < riddles.length; i++) {
+                        var image = riddles[i].querySelector("img");
+                        var input = riddles[i].querySelector("input");
+                        var imageName = image.getAttribute("src");
+                        var playerAnswer = input.value.toLowerCase();
+
+                        // Remove the 'correct-answer' and 'wrong-answer' classes to reset colors
+                        input.classList.remove("correct-answer");
+                        input.classList.remove("wrong-answer");
+
+                        // If input is not empty or just spaces
+                        if (playerAnswer.trim() === "") {
+                            playerAnswer = "Blank";
+                        }
+
+                        if (correctAnswers[imageName]) {
+                            var correctAnswer = correctAnswers[imageName];
+
+                            // check for mistake
+                            if (isCloseEnough(playerAnswer, correctAnswer)) {
+                                totalCorrect++;
+                                input.classList.add("correct-answer"); // Add 'correct-answer' class
+                            } else {
+                                wrongAnswers[playerAnswer] = correctAnswer;
+                                input.classList.add("wrong-answer"); // Add 'wrong-answer' class
+                            }
+                        }
+                    }
+                var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
+                var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
+                if (Object.keys(wrongAnswers).length > 0) {
+                    resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
+                    for (var playerAnswer in wrongAnswers) {
+                        resultMessage += "<br>" + playerAnswer;
+                    }
+                }
+
+                document.getElementById("result").innerHTML = resultMessage;
+            }
+
+
+        var selectedImages = [];
+
+        var selectedImageIndices = [];
+        while (selectedImageIndices.length < 10) {
+            var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+            if (!selectedImageIndices.includes(randomIndex)) {
+                selectedImageIndices.push(randomIndex);
+            }
+        }
+        var selectedImages = selectedImageIndices.map(function(index) {
+            return imageFileNames[index];
+        });
+        var riddlesContainer = document.getElementById("riddles-container");
+        for (var i = 0; i < selectedImages.length; i++) {
+            var riddleDiv = document.createElement("div");
+            riddleDiv.classList.add("riddle");
+
+            var img = document.createElement("img");
+            img.src = selectedImages[i];
+            img.alt = "Picture " + (i + 1);
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.style = "width: 300px; height: 40px";
+            input.placeholder = "Enter Levelname:";
+
+            var clueButton = document.createElement("button");
+            clueButton.textContent = "Get a Clue";
+            clueButton.classList.add("clue-button");
+
+            // Use a closure to capture the current value of 'i'
+            (function(index) {
+                clueButton.addEventListener("click", function (event) {
+                    var index = selectedImageIndices.indexOf(index);
+                    if (index !== -1) {
+                        var clue = getClueForImage(imageFileNames[selectedImageIndices[index]]);
+                        alert(clue);
+                    }
+                });
+            })(i);
+
+            riddleDiv.appendChild(img);
+            riddleDiv.appendChild(input);
+            riddleDiv.appendChild(clueButton);
+
+            riddlesContainer.appendChild(riddleDiv);
+            riddlesContainer.appendChild(document.createElement("br"));
+        }
+        
+        var wrongAnswers = {}; // declare outside functions
+        
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+        
+        
+
+
+        function fillWrongAnswers() {
+            var riddles = document.getElementsByClassName("riddle");
+            for (var i = 0; i < riddles.length; i++) {
+                var input = riddles[i].querySelector("input");
+                var playerAnswer = input.value.toLowerCase();
+
+                if (playerAnswer in wrongAnswers) {
+                    input.value = wrongAnswers[playerAnswer];
+                    input.classList.remove("wrong-answer"); // Entferne die CSS-Klasse
+                } else {
+                    input.classList.remove("correct-answer"); // Entferne die CSS-Klasse
+                }
+            }
+        }
+        
+        // check if there's a mistake and how close it has to be
+        function isCloseEnough(str1, str2) {
+            var maxErrors = 2; // amount of max possible mistakes
+            var errors = 0;
+            
+            for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
+                if (str1[i] !== str2[i]) {
+                    errors++;
+                    if (errors > maxErrors) {
+                        return false;
+                    }
+                }
+            }
+            
+            // in case of different length of strings
+            errors += Math.abs(str1.length - str2.length);
+            
+            return errors <= maxErrors;
+        }
+        
+        var numberOfSelectedImages = 10;
+
+        function imageAmount() {
+            numberOfSelectedImages = parseInt(prompt("Enter the number of images you want to guess (up to 10):"));
+
+            if (isNaN(numberOfSelectedImages) || numberOfSelectedImages <= 0 || numberOfSelectedImages > 10) {
+                alert("Please enter a valid number between 1 and 10.");
+                return;
+            }
+
+            updateButtonText();
+
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                }
+            }
+
+            // Clear the riddles container before adding new images
+            var riddlesContainer = document.getElementById("riddles-container");
+            riddlesContainer.innerHTML = "";
+
+            // Load images dynamically
+            selectedImageIndices.forEach(function (index) {
+                var riddleDiv = document.createElement("div");
+                riddleDiv.classList.add("riddle");
+
+                var img = document.createElement("img");
+                img.src = imageFileNames[index];
+                img.alt = "Picture " + (index + 1);
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.style = "width: 300px; height: 40px";
+                input.placeholder = "Enter Room number:";
+
+                var clueButton = document.createElement("button");
+                clueButton.textContent = "Get a Clue";
+                clueButton.classList.add("clue-button");
+
+                // Use a closure to capture the current value of 'index'
+                clueButton.addEventListener("click", function (event) {
+                    var clue = getClueForImage(selectedImages[index]);
+                    alert(clue);
+                });
+
+                riddleDiv.appendChild(img);
+                riddleDiv.appendChild(input);
+                riddleDiv.appendChild(clueButton);
+
+                riddlesContainer.appendChild(riddleDiv);
+                riddlesContainer.appendChild(document.createElement("br"));
+            });
+
+            // Reset result message
+            document.getElementById("result").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

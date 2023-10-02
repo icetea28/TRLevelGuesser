@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOMB RAIDER LEVEL GUESSER (BETA)</title>
+    <style>
+        /*coloring correct green*/
+        .correct-answer {
+            background-color: #8ce598; /* Hellgrün */
+        }
+    
+        /*coloring wrong red*/
+        .wrong-answer {
+            background-color: #f4a19a; /* Hellrot */
+        }
+
+        .clue-button {
+        background-color: rgb(248, 255, 154); /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 1mm ridge rgb(0, 64, 255);        /*<line-width> || <line-style> || <color>;*/
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-left: 10px; /* Add some spacing between the button and input */
+        }
+
+        .change-amount-button {
+        background-color: #3498DB; /* Blue color */
+        color: rgb(255, 255, 255);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .checkAnswers {
+        background-color: #00ff37; /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .fillWrongAnswers {
+        background-color: #eaff00; /* Blue color */
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1><font size=10><font color=#B404AE>TOMB RAIDER LEVEL GUESSER</font size></font color></h1>
+    <br><font size=2>Beta v0.2.0</font size>
+        <p></p>
+        <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change amount of pictures (10)</button>
+    <p></p>
+    <h2><b><font size="5">Rules and Information:</font></b></h2>
+    <p><font size="4"> - Enter the name of the level in the box next to each picture
+        <br> - There's a margin of 2 spelling mistakes per Answer (apostrophes like ' must not be forgotten though!)
+        <br> - Capitalization is not considered
+        <br> - You can reveal the solution for pictures you can't solve at the end 
+        <br> - If you're unsure about a level name, open levelnames.txt in the main folder to check for each exact name
+        <br>
+    </font></p>
+    
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+    <br>
+    <button class="checkAnswers" onclick="checkAnswers()">Check your Answers</button>
+    <button class="fillWrongAnswers" onclick="fillWrongAnswers()">Fill Wrong Answers</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        //EVERYTHING RELATED TO LEVELS - EDIT WHEN CHANGING PICTURES OR ADDING OR REMOVING
+            //RAW IMAGE FILES DIRECTORY
+                var imageFileNames = ["../../pictures/TR2/tr2.bark.10m.png", "../../pictures/TR2/tr2.bark.39m.png", "../../pictures/TR2/tr2.bark.55e.png", "../../pictures/TR2/tr2.bartoli.106e.png", "../../pictures/TR2/tr2.bartoli.131d.png",
+                "../../pictures/TR2/tr2.catac42m.png", "../../pictures/TR2/tr2.catac97m.png", "../../pictures/TR2/tr2.deck.63e.png", "../../pictures/TR2/tr2.deck.99m.png", "../../pictures/TR2/tr2.deck.108d.png", "../../pictures/TR2/tr2.diving.46d.png", 
+                "../../pictures/TR2/tr2.diving.48e.png", "../../pictures/TR2/tr2.fathom.5d.png", "../../pictures/TR2/tr2.fathom.40m.png", "../../pictures/TR2/tr2.float.66m.png", "../../pictures/TR2/tr2.float.88m.png", "../../pictures/TR2/tr2.float.157d.png", 
+                "../../pictures/TR2/tr2.ice.13m.png", "../../pictures/TR2/tr2.ice.97d.png", "../../pictures/TR2/tr2.ice.107m.png", "../../pictures/TR2/tr2.lair.3m.png", "../../pictures/TR2/tr2.lair.21d.png", "../../pictures/TR2/tr2.living.30d.png", 
+                "../../pictures/TR2/tr2.living.38m.png", "../../pictures/TR2/tr2.maria.11d.png", "../../pictures/TR2/tr2.maria.49m.png", "../../pictures/TR2/tr2.maria.76d.png", "../../pictures/TR2/tr2.maria.80m.png", "../../pictures/TR2/tr2.opera.104e.png", 
+                "../../pictures/TR2/tr2.opera.111d.png", "../../pictures/TR2/tr2.rig.19m.png", "../../pictures/TR2/tr2.rig.55m.png", "../../pictures/TR2/tr2.tibet.15e.png", "../../pictures/TR2/tr2.tibet.55d.png", "../../pictures/TR2/tr2.tibet.67m.png", 
+                "../../pictures/TR2/tr2.venice.0d.png", "../../pictures/TR2/tr2.venice.139d.png", "../../pictures/TR2/tr2.wall.37m.png", "../../pictures/TR2/tr2.wall.75m.png", "../../pictures/TR2/tr2.xian.17d.png", "../../pictures/TR2/tr2.xian.35d.png", 
+                "../../pictures/TR2/tr2.xian.92m.png", "../../pictures/TR2/tr2.xian.155e.png", "../../pictures/TR2/tr2.xian.138e.png", "../../pictures/TR2/tr2.xian.151d.png"]; // enter file name with the file type e.g. pictures/egg.jpg
+            //CLUES FOR IMAGES
+                function getClueForImage(imageSrc) {
+                    var clueMap = {
+                        "tr2.bark.10m.png": "don't disturb the monks!", 
+                        "tr2.bark.39m.png": "pay attention or you might die to a spindle", 
+                        "tr2.bark.55e.png": "Believe in yourself, you don't need a clue for this KEKWait", 
+                        "tr2.bartoli.106e.png": "don't drive against those with your boat", 
+                        "tr2.bartoli.131d.png": "hopefully the balcony won't fall apart from the explosion",
+                        "tr2.catac42m.png": "is that actually a ladder?", 
+                        "tr2.catac97m.png": "if you fall off the platform you'll land in water", 
+                        "tr2.deck.99m.png": "you will miss this area if you don't play dev-intended", 
+                        "tr2.deck.108d.png": "a tiny room at the bottom of a huge room", 
+                        "tr2.diving.46d.png": "you'll see this area when you fail a jump and fall into the water", 
+                        "tr2.diving.48e.png": "don't slide too far or you may fall into......", 
+                        "tr2.fathom.5d.png": "a part of a room with width and length of ~100 blocks", 
+                        "tr2.fathom.40m.png": "the ground is shaking in here if you pull some lever", 
+                        "tr2.float.66m.png": "this is not easily accessable, but it's possible to stand here", 
+                        "tr2.float.88m.png": "jump off and you'll land on a slope", 
+                        "tr2.float.157d.png": "even before the start", 
+                        "tr2.ice.13m.png": "you can only look into this room from the outside", 
+                        "tr2.ice.97d.png": "you see this room behind a window",  
+                        "tr2.ice.107m.png": "you probably missed the bridge if you find yourself here", 
+                        "tr2.lair.3m.png": "there is an enemy in the middle of the blocks which isn't shown in the picture", 
+                        "tr2.lair.21d.png": "don't die so close to the end!", 
+                        "tr2.living.30d.png": "a secret is nearby", 
+                        "tr2.living.38m.png": "seems like you didn't do the jump to skip this part of the level", 
+                        "tr2.maria.11d.png": "Do you smell that? It smells like a secret... must be somewhere around here..", 
+                        "tr2.maria.49m.png": "chairs on the ceiling... the ship must have flipped", 
+                        "tr2.maria.76d.png": "you could spend some time trying to kill the shark below you", 
+                        "tr2.maria.80m.png": "Why don't you take some time to look down instead and attempt killing the shark you find there", 
+                        "tr2.opera.104e.png": "Last thing Lara sees before she gets knocked out", 
+                        "tr2.opera.111d.png": "don't die in the fans!", 
+                        "tr2.rig.19m.png": "grab the automatics and fight for your win", 
+                        "tr2.rig.55m.png": "you got the keycard, now lets head out to the next level", 
+                        "tr2.tibet.15e.png": "the two owners will try to defend them as you get close", 
+                        "tr2.tibet.55d.png": "if you wouldn't speed through this area you could recognize it now", 
+                        "tr2.venice.0d.png": "way too early in the level so you might miss it in your playthrough", 
+                        "tr2.venice.139d.png": "the canal is right below you",  
+                        "tr2.wall.75m.png": "grab the flares here if it's too dark for you...", 
+                        "tr2.xian.17d.png": "you can't reach this side of the room..", 
+                        "tr2.xian.35d.png": "the lever raises platforms", 
+                        "tr2.xian.92m.png": "you enter the room right below this", 
+                        "tr2.xian.155e.png": "congrats, you didn't die to the knifes if you made it here", 
+                        "tr2.xian.138e.png": "The summoning-ball of Arachnophobia", 
+                        "tr2.xian.151d.png": "the key which can be picked here is removed",
+                    };
+                // Extract the filename from the imageSrc
+                var filename = imageSrc.split('/').pop();
+                return clueMap[filename] || "No clue available for this image. I must have forgotten it FeelsBadMan";
+                }
+        
+            //CORRECT ANSWER FOR EACH LEVEL    
+                function checkAnswers() {
+            // Clear the wrongAnswers object before checking answers
+                wrongAnswers = {};
+        
+                var correctAnswers = {
+                    "../../pictures/TR2/tr2.bark.10m.png": "barkhang monastery", 
+                    "../../pictures/TR2/tr2.bark.39m.png": "barkhang monastery", 
+                    "../../pictures/TR2/tr2.bark.55e.png": "barkhang monastery", 
+                    "../../pictures/TR2/tr2.bartoli.106e.png": "bartoli's hideout", 
+                    "../../pictures/TR2/tr2.bartoli.131d.png": "bartoli's hideout",
+                    "../../pictures/TR2/tr2.catac42m.png": "catacombs of the talion", 
+                    "../../pictures/TR2/tr2.catac97m.png": "catacombs of the talion", 
+                    "../../pictures/TR2/tr2.deck.63e.png": "the deck", 
+                    "../../pictures/TR2/tr2.deck.99m.png": "the deck", 
+                    "../../pictures/TR2/tr2.deck.108d.png": "the deck", 
+                    "../../pictures/TR2/tr2.diving.46d.png": "diving area", 
+                    "../../pictures/TR2/tr2.diving.48e.png": "diving area", 
+                    "../../pictures/TR2/tr2.fathom.5d.png": "40 fathoms", 
+                    "../../pictures/TR2/tr2.fathom.40m.png": "40 fathoms", 
+                    "../../pictures/TR2/tr2.float.66m.png": "floating islands", 
+                    "../../pictures/TR2/tr2.float.88m.png": "floating islands", 
+                    "../../pictures/TR2/tr2.float.157d.png": "floating islands", 
+                    "../../pictures/TR2/tr2.ice.13m.png": "ice palace", 
+                    "../../pictures/TR2/tr2.ice.97d.png": "ice palace",  
+                    "../../pictures/TR2/tr2.ice.107m.png": "ice palace", 
+                    "../../pictures/TR2/tr2.lair.3m.png": "the dragon's lair", 
+                    "../../pictures/TR2/tr2.lair.21d.png": "the dragon's lair", 
+                    "../../pictures/TR2/tr2.living.30d.png": "living quarters", 
+                    "../../pictures/TR2/tr2.living.38m.png": "living quarters", 
+                    "../../pictures/TR2/tr2.maria.11d.png": "wreck of the maria doria", 
+                    "../../pictures/TR2/tr2.maria.49m.png": "wreck of the maria doria", 
+                    "../../pictures/TR2/tr2.maria.76d.png": "wreck of the maria doria", 
+                    "../../pictures/TR2/tr2.maria.80m.png": "wreck of the maria doria", 
+                    "../../pictures/TR2/tr2.opera.104e.png": "opera house", 
+                    "../../pictures/TR2/tr2.opera.111d.png": "opera house", 
+                    "../../pictures/TR2/tr2.rig.19m.png": "offshore rig", 
+                    "../../pictures/TR2/tr2.rig.55m.png": "offshore rig", 
+                    "../../pictures/TR2/tr2.tibet.15e.png": "tibetan foothills", 
+                    "../../pictures/TR2/tr2.tibet.55d.png": "tibetan foothills", 
+                    "../../pictures/TR2/tr2.tibet.67m.png": "tibetan foothills", 
+                    "../../pictures/TR2/tr2.venice.0d.png": "venice", 
+                    "../../pictures/TR2/tr2.venice.139d.png": "venice", 
+                    "../../pictures/TR2/tr2.wall.37m.png": "the great wall", 
+                    "../../pictures/TR2/tr2.wall.75m.png": "the great wall", 
+                    "../../pictures/TR2/tr2.xian.17d.png": "temple of xian", 
+                    "../../pictures/TR2/tr2.xian.35d.png": "temple of xian", 
+                    "../../pictures/TR2/tr2.xian.92m.png": "temple of xian", 
+                    "../../pictures/TR2/tr2.xian.155e.png": "temple of xian", 
+                    "../../pictures/TR2/tr2.xian.138e.png": "temple of xian", 
+                    "../../pictures/TR2/tr2.xian.151d.png": "temple of xian",
+                // more pictures added same way, picture name with file type in first "", expected answer in second "",
+                };
+
+                var totalCorrect = 0;
+
+                var totalCorrect = 0;
+
+                var riddles = document.getElementsByClassName("riddle");
+                for (var i = 0; i < riddles.length; i++) {
+                    var image = riddles[i].querySelector("img");
+                    var input = riddles[i].querySelector("input");
+                    var imageName = image.getAttribute("src");
+                    var playerAnswer = input.value.toLowerCase();
+
+                    // If input is not empty or just spaces
+                    if (playerAnswer.trim() === "") {
+                        playerAnswer = "Blank";
+                        }
+
+                    if (correctAnswers[imageName]) {
+                        var correctAnswer = correctAnswers[imageName];
+
+                        // check for mistake
+                        if (isCloseEnough(playerAnswer, correctAnswer)) {
+                            totalCorrect++;
+                            input.classList.add("correct-answer"); // Füge die CSS-Klasse hinzu
+                        } else {
+                            wrongAnswers[playerAnswer] = correctAnswer;
+                            input.classList.add("wrong-answer"); // Füge die CSS-Klasse hinzu
+                        }
+                    }
+                }
+                var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
+                var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
+                if (Object.keys(wrongAnswers).length > 0) {
+                    resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
+                    for (var playerAnswer in wrongAnswers) {
+                        resultMessage += "<br>" + playerAnswer;
+                    }
+                }
+
+                document.getElementById("result").innerHTML = resultMessage;
+            }
+
+
+        var selectedImages = [];
+
+        var selectedImageIndices = [];
+        while (selectedImageIndices.length < 10) {
+            var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+            if (!selectedImageIndices.includes(randomIndex)) {
+                selectedImageIndices.push(randomIndex);
+            }
+        }
+        var selectedImages = selectedImageIndices.map(function(index) {
+            return imageFileNames[index];
+        });
+        var riddlesContainer = document.getElementById("riddles-container");
+        for (var i = 0; i < selectedImages.length; i++) {
+            var riddleDiv = document.createElement("div");
+            riddleDiv.classList.add("riddle");
+
+            var img = document.createElement("img");
+            img.src = selectedImages[i];
+            img.alt = "Picture " + (i + 1);
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.style = "width: 300px; height: 40px";
+            input.placeholder = "Enter Levelname:";
+
+            var clueButton = document.createElement("button");
+            clueButton.textContent = "Get a Clue";
+            clueButton.classList.add("clue-button");
+
+            // Use a closure to capture the current value of 'i'
+            (function(index) {
+                clueButton.addEventListener("click", function (event) {
+                    var index = selectedImageIndices.indexOf(index);
+                    if (index !== -1) {
+                        var clue = getClueForImage(imageFileNames[selectedImageIndices[index]]);
+                        alert(clue);
+                    }
+                });
+            })(i);
+
+            riddleDiv.appendChild(img);
+            riddleDiv.appendChild(input);
+            riddleDiv.appendChild(clueButton);
+
+            riddlesContainer.appendChild(riddleDiv);
+            riddlesContainer.appendChild(document.createElement("br"));
+        }
+        
+        var wrongAnswers = {}; // declare outside functions
+        
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+        
+        
+
+
+        function fillWrongAnswers() {
+            var riddles = document.getElementsByClassName("riddle");
+            for (var i = 0; i < riddles.length; i++) {
+                var input = riddles[i].querySelector("input");
+                var playerAnswer = input.value.toLowerCase();
+
+                if (playerAnswer in wrongAnswers) {
+                    input.value = wrongAnswers[playerAnswer];
+                    input.classList.remove("wrong-answer"); // Entferne die CSS-Klasse
+                } else {
+                    input.classList.remove("correct-answer"); // Entferne die CSS-Klasse
+                }
+            }
+        }
+        
+        // check if there's a mistake and how close it has to be
+        function isCloseEnough(str1, str2) {
+            var maxErrors = 2; // amount of max possible mistakes
+            var errors = 0;
+            
+            for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
+                if (str1[i] !== str2[i]) {
+                    errors++;
+                    if (errors > maxErrors) {
+                        return false;
+                    }
+                }
+            }
+            
+            // in case of different length of strings
+            errors += Math.abs(str1.length - str2.length);
+            
+            return errors <= maxErrors;
+        }
+        
+        var numberOfSelectedImages = 10;
+
+        function imageAmount() {
+            numberOfSelectedImages = parseInt(prompt("Enter the number of images you want to guess (up to 10):"));
+
+            if (isNaN(numberOfSelectedImages) || numberOfSelectedImages <= 0 || numberOfSelectedImages > 10) {
+                alert("Please enter a valid number between 1 and 10.");
+                return;
+            }
+
+            updateButtonText();
+
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                }
+            }
+
+            // Clear the riddles container before adding new images
+            var riddlesContainer = document.getElementById("riddles-container");
+            riddlesContainer.innerHTML = "";
+
+            // Load images dynamically
+            selectedImageIndices.forEach(function (index) {
+                var riddleDiv = document.createElement("div");
+                riddleDiv.classList.add("riddle");
+
+                var img = document.createElement("img");
+                img.src = imageFileNames[index];
+                img.alt = "Picture " + (index + 1);
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.style = "width: 300px; height: 40px";
+                input.placeholder = "Enter Room number:";
+
+                var clueButton = document.createElement("button");
+                clueButton.textContent = "Get a Clue";
+                clueButton.classList.add("clue-button");
+
+                // Use a closure to capture the current value of 'index'
+                clueButton.addEventListener("click", function (event) {
+                    var clue = getClueForImage(selectedImages[index]);
+                    alert(clue);
+                });
+
+                riddleDiv.appendChild(img);
+                riddleDiv.appendChild(input);
+                riddleDiv.appendChild(clueButton);
+
+                riddlesContainer.appendChild(riddleDiv);
+                riddlesContainer.appendChild(document.createElement("br"));
+            });
+
+            // Reset result message
+            document.getElementById("result").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
