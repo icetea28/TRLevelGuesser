@@ -1,0 +1,49 @@
+.correct-answer {
+    background-color: #8ce598;
+}
+
+.wrong-answer {
+    background-color: #f4a19a;
+}
+
+.clue-button {
+    background-color: rgb(248, 255, 154);
+    color: #000;
+    border: 1mm ridge rgb(0, 64, 255);
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.change-amount-button {
+    background-color: #3498DB;
+    color: rgb(255, 255, 255);
+    border: 0.5mm ridge #000;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.checkAnswers {
+    background-color: #00ff37;
+    color: #000;
+    border: 0.5mm ridge #000;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.fillWrongAnswers {
+    background-color: #eaff00;
+    color: #000;
+    border: 0.5mm ridge #000;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+}
