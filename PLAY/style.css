@@ -1,3 +1,24 @@
+body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+h1 {
+    color:#b404ae; 
+    font-size: 4em;
+}
+h2 {
+    font-weight: bold;
+}
+.rules {
+    font-size: 14pt;
+}
+.version {
+    font-size: 1em;
+}
+.credits {
+    font-size: 1em;
+}
+
 .correct-answer {
     background-color: #8ce598;
 }
