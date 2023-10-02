@@ -4,8 +4,7 @@ for (let key of Object.keys(riddleData.images)) {
 }
 
 function checkAnswers() {
-    // Clear the wrongAnswers object before checking answers
-    wrongAnswers = {};
+    let wrongInputs = new Set();
 
     let totalCorrect = 0;
 
@@ -14,41 +13,50 @@ function checkAnswers() {
         const image = riddles[i].querySelector("img");
         const input = riddles[i].querySelector("input");
         const imageName = image.getAttribute("src").split('/').pop();
-        let playerAnswer = input.value.toLowerCase();
+        let playerAnswer = input.value.toLowerCase().trim();
 
         // Remove the 'correct-answer' and 'wrong-answer' classes to reset colors
         input.classList.remove("correct-answer");
         input.classList.remove("wrong-answer");
 
         // If input is not empty or just spaces
-        if (playerAnswer.trim() === "") {
+        if (playerAnswer === '') {
             playerAnswer = "Blank";
         }
 
         if (riddleData.images[imageName]) {
-            const correctAnswer = riddleData.images[imageName].solution;
+            const correctAnswer = getAnswerForImageUrl(image.src);
 
             // check for mistake
-            if (isCloseEnough(playerAnswer, correctAnswer)) {
+            if (answerMatches(playerAnswer, correctAnswer)) {
                 totalCorrect++;
-                input.classList.add("correct-answer"); // Add 'correct-answer' class
+                input.classList.add("correct-answer");
             } else {
-                wrongAnswers[playerAnswer] = correctAnswer;
-                input.classList.add("wrong-answer"); // Add 'wrong-answer' class
+                wrongInputs.add(playerAnswer || 'Blank');
+                input.classList.add("wrong-answer");
             }
         }
     }
 
-    // TODO: Styling
-    let resultMessage = "<font size=5><b><font color=#01DF01>Total correct answers: " + totalCorrect + "/" + riddles.length + "</font></b></font>";
-    if (Object.keys(wrongAnswers).length > 0) {
-        resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font></b></font>";
-        for (let playerAnswer in wrongAnswers) {
-            resultMessage += "<br>" + playerAnswer;
-        }
+    let resultMessage = `<div class="result-correct-answers">Total correct answers: ${totalCorrect}/${riddles.length}</div>`;
+    if (wrongInputs.size > 0) {
+        resultMessage += '<div class="result-wrong-answers">Your mistakes:</div><ul>';
+        wrongInputs.forEach(mistake => {
+            resultMessage += `<li>${mistake}</li>`;
+        });
+        resultMessage += '</ul>';
     }
 
-    document.getElementById("result").innerHTML = resultMessage;
+    document.getElementById('result').innerHTML = resultMessage;
+}
+
+function getAnswerForImageUrl(imageUrl) {
+    const imageName = imageUrl.split('/').pop();
+
+    if (!riddleData.images[imageName]) {
+        throw new Error('Unexpected error: Missing riddle data for "' + imageUrl + '"');
+    }
+    return riddleData.images[imageName].solution;
 }
 
 function selectRiddleEntries(totalEntries) {
@@ -75,7 +83,7 @@ function addImagesToPage(imageEntries) {
 
         const inputElem = document.createElement('input');
         inputElem.type = 'text';
-        inputElem.style = 'width: 300px; height: 40px';
+        inputElem.classList.add('answer');
         inputElem.placeholder = riddleData.type === 'ROOM' ? 'Enter room number' : 'Enter level name';
 
         const clueButton = document.createElement('button');
@@ -86,7 +94,6 @@ function addImagesToPage(imageEntries) {
         riddleDiv.appendChild(imageElem);
         riddleDiv.appendChild(inputElem);
         riddleDiv.appendChild(clueButton);
-
 
         riddlesContainer.appendChild(riddleDiv);
         riddlesContainer.appendChild(document.createElement("br"));
@@ -99,27 +106,30 @@ function updateButtonText(numberOfImages) {
 }
 
 function fillWrongAnswers() {
-    const riddles = document.getElementsByClassName("riddle");
+    const riddles = document.getElementsByClassName('riddle');
     for (let i = 0; i < riddles.length; i++) {
-        const input = riddles[i].querySelector("input");
-        const playerAnswer = input.value.toLowerCase();
+        const input = riddles[i].querySelector('input');
+        const playerAnswer = input.value.toLowerCase().trim();
+        if (!playerAnswer) {
+            continue; // Don't fill empty fields
+        }
 
-        if (playerAnswer in wrongAnswers) {
-            input.value = wrongAnswers[playerAnswer];
-            input.classList.remove("wrong-answer"); // Entferne die CSS-Klasse
-        } else {
-            input.classList.remove("correct-answer"); // Entferne die CSS-Klasse
+        const img = riddles[i].querySelector('img');
+        const correctAnswer = getAnswerForImageUrl(img.src);
+        if (!answerMatches(playerAnswer, correctAnswer)) {
+            input.classList.remove("correct-answer");
+            input.classList.remove("wrong-answer");
+            input.value = correctAnswer;
         }
     }
 }
 
-// check if there's a mistake and how close it has to be
-function isCloseEnough(str1, str2) {
+function answerMatches(inputAnswer, correctAnswer) {
     const maxErrors = riddleData.type === 'ROOM' ? 0 : 2; // number of max possible mistakes
     let errors = 0;
 
-    for (let i = 0; i < Math.min(str1.length, str2.length); i++) {
-        if (str1[i] !== str2[i]) {
+    for (let i = 0; i < Math.min(inputAnswer.length, correctAnswer.length); i++) {
+        if (inputAnswer[i] !== correctAnswer[i]) {
             errors++;
             if (errors > maxErrors) {
                 return false;
@@ -128,8 +138,7 @@ function isCloseEnough(str1, str2) {
     }
 
     // in case of different length of strings
-    errors += Math.abs(str1.length - str2.length);
-
+    errors += Math.abs(inputAnswer.length - correctAnswer.length);
     return errors <= maxErrors;
 }
 
@@ -148,7 +157,5 @@ function imageAmount() {
     const newImages = selectRiddleEntries(newNumberOfImages);
     addImagesToPage(newImages);
 }
-
-var wrongAnswers = {}; // declare outside functions
 
 addImagesToPage(selectRiddleEntries(10));

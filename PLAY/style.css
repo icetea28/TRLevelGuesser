@@ -19,10 +19,26 @@ h2 {
     font-size: 1em;
 }
 
+.result-wrong-answers, .result-correct-answers {
+    font-size: 1.8em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.result-correct-answers {
+    color:#01df01;
+}
+.result-wrong-answers {
+    color: #f00;
+}
+
+input.answer {
+    width: 300px;
+    height: 40px;
+    margin-left: 10px;
+}
 .correct-answer {
     background-color: #8ce598;
 }
-
 .wrong-answer {
     background-color: #f4a19a;
 }
