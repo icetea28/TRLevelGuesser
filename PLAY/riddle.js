@@ -19,11 +19,6 @@ function checkAnswers() {
         input.classList.remove("correct-answer");
         input.classList.remove("wrong-answer");
 
-        // If input is not empty or just spaces
-        if (playerAnswer === '') {
-            playerAnswer = "Blank";
-        }
-
         if (riddleData.images[imageName]) {
             const correctAnswer = getAnswerForImageUrl(image.src);
 
@@ -156,6 +151,7 @@ function promptNewNumberOfImages() {
     updateButtonText(newNumberOfImages);
     const newImages = selectRiddleEntries(newNumberOfImages);
     addImagesToPage(newImages);
+    document.getElementById('result').innerHTML = '';
 }
 
 addImagesToPage(selectRiddleEntries(10));
