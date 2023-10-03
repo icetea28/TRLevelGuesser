@@ -140,7 +140,7 @@ function answerMatches(inputAnswer, correctAnswer) {
 function promptNewNumberOfImages() {
     const userPrompt = prompt('Enter the number of images you want to guess (up to 10):');
     const newNumberOfImages = parseInt(userPrompt);
-    console.log(newNumberOfImages);
+
     if (isNaN(newNumberOfImages) || newNumberOfImages <= 0 || newNumberOfImages > 10) {
         if (userPrompt !== null) {
             alert('Please enter a valid number between 1 and 10.');

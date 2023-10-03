@@ -2,6 +2,19 @@ body {
     font-family: Arial;
     font-size: 10pt;
 }
+body.light-mode {
+    background-color: #fff;
+    color: #000;
+}
+body.dark-mode {
+    background-color: #252525;
+    color: #fff;
+}
+
+body.dark-mode input {
+    background-color: #bbb;
+}
+
 h1 {
     color:#b404ae; 
     font-size: 4em;
@@ -17,6 +30,8 @@ h2 {
 }
 .credits {
     font-size: 1em;
+    color: #bfac00;
+    font-weight: bold;
 }
 
 .result-wrong-answers, .result-correct-answers {
@@ -44,17 +59,17 @@ input.answer {
 }
 
 button.clue-button {
-    background-color: rgb(248, 255, 154);
+    background-color: #f8ff9a;
     color: #000;
-    border: 1mm ridge rgb(0, 64, 255);
+    border: 1mm ridge #0040ff;
     padding: 5px 10px;
     cursor: pointer;
     margin-left: 10px;
 }
 
 .change-amount-button {
-    background-color: #3498DB;
-    color: rgb(255, 255, 255);
+    background-color: #3498db;
+    color: #fff;
     border: 0.5mm ridge #000;
     padding: 10px 20px;
     cursor: pointer;
