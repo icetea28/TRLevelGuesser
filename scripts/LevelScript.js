@@ -3,6 +3,10 @@ for (let key of Object.keys(riddleData.images)) {
     riddleData.images[key].source = key;
 }
 
+function returnToMenu() {
+    window.location.href = "../TR Guesser.html";
+}
+
 function checkAnswers() {
     let wrongInputs = new Set();
 

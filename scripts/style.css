@@ -78,6 +78,17 @@ button.clue-button {
     margin: 10px;
 }
 
+.return-button {
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    border: 0.5mm ridge #000;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
 button.check-answers {
     background-color: #00ff37;
     color: #000;

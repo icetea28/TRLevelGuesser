@@ -2,19 +2,16 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>TOMB RAIDER LEVEL GUESSER (BETA)</title>
-    <link rel="stylesheet" type="text/css" href="scripts/style.css" />
+    <title>TOMB RAIDER LEVEL GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-    <h1>TOMB RAIDER LEVEL GUESSER</h1>
-    <p class="version">Beta v0.4.0</p>
-    <p class="credits" style="color: #f06292">
-        credits to bianca for helping out with many TR2 pictures YEP
-    <br><font color="green">and to highwayscenes (https://www.twitch.tv/highwayscenes) for fixing many bugs and helping out with the code EZ</p></font>
-    
+    <h1>TOMB RAIDER LEVEL GUESSER</h1> 
 
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../TR Guesser.html'">Back to Game Selection</button>
+
 
     <h2>Rules and Information:</h2>
     <ul class="rules">
@@ -35,7 +32,7 @@
     <script>
         const riddleData = {
             type: 'LEVEL',
-            folder: 'pictures/TR2/',
+            folder: '../pictures/TR2/',
 
             images: {
                 "tr2.bark.10m.png": { solution: "barkhang monastery", hint: "don't disturb the monks!" },
@@ -182,7 +179,7 @@
             "Wreck of the Maria Doria", /* Weitere Levelnamen hier einfügen */
         ];
     </script>
-    <script src="scripts/LevelScript.js"></script>
-    <script src="scripts/switchstyle.js"></script>
+    <script src="LevelScript.js"></script>
+    <script src="switchstyle.js"></script>
 </body>
 </html>
