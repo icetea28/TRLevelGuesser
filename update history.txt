@@ -1,7 +1,11 @@
 v0.4.0
+New Features:
+- Dropdown-Menu for Levelnames
+Bug Fixes:
 - Fixed that empty answer boxes don't get corrected
 - Correcting similar wrong answers won't break anymore
 - Clues are now shown with less than 10 pictures too
+
 
 v0.3.0
 - Added more TR2 pictures thanks to bianca
