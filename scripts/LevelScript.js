@@ -164,6 +164,11 @@ function promptNewNumberOfImages() {
         return;
     }
 
+    updateButtonText(newNumberOfImages);
+    const newImages = selectRiddleEntries(newNumberOfImages);
+    addImagesToPage(newImages);
+    document.getElementById('result').innerHTML = '';
+
     const levelSuggestionsList = document.getElementById('level-suggestions');
     levelSuggestionsList.innerHTML = '';
 
@@ -172,11 +177,6 @@ function promptNewNumberOfImages() {
         option.value = level;
         levelSuggestionsList.appendChild(option);
     });
-
-    updateButtonText(newNumberOfImages);
-    const newImages = selectRiddleEntries(newNumberOfImages);
-    addImagesToPage(newImages);
-    document.getElementById('result').innerHTML = '';
 }
 
 addImagesToPage(selectRiddleEntries(10));
