@@ -1,6 +1,7 @@
 v0.4.0
 New Features:
 - Dropdown-Menu for Levelnames
+- Linked all HTML files and created a main menu
 Bug Fixes:
 - Fixed that empty answer boxes don't get corrected
 - Correcting similar wrong answers won't break anymore
