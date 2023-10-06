@@ -54,15 +54,37 @@
         border-radius: 5px;
         margin: 10px;
         }
+
+        .mode-toggle {
+        background-color:#00ff37;
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .light-mode {
+        background-color: #ffffff;
+        color: #000000;
+        }
+        .dark-mode {
+        background-color: #252525;
+        color: #ffffff;
+        }
     </style>
     
 </head>
 <body>
     <h1><font size=10><font color=#B404AE>TOMB RAIDER LEVEL GUESSER</font size></font color></h1>
-    <br><font size=2>Beta v0.2.1</font size>
+    <br><font size=2>Beta v0.3.0</font size>
         <p></p>
-    <br><font size=40>credits to gui for helping out with some TR3 pictures YEP</font>
+    <br><font size=4><font color=#bfac00><b>credits to gui for helping out with some TR3 pictures YEP</font></b>
     <br>https://www.twitch.tv/guigui0001_
+        <p></p>
+        <button id="mode-toggle" class="change-amount-button">Switch Light- / Dark Mode</button>
         <p></p>
         <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change amount of pictures (10)</button>
     <p></p>
@@ -85,6 +107,26 @@
     <div id="result"></div>
     
     <script>
+        //background color script:
+        const toggleButton = document.getElementById('mode-toggle');
+            const body = document.body;
+
+            // check if mode saved
+            const currentMode = localStorage.getItem('mode');
+            if (currentMode) {
+                body.classList.add(currentMode);
+            }
+
+            // function to switch mode
+            toggleButton.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('mode', 'light-mode');
+                } else {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('mode', 'dark-mode');
+                }
+            });
         //EVERYTHING RELATED TO LEVELS - EDIT WHEN CHANGING PICTURES OR ADDING OR REMOVING
             //RAW IMAGE FILES DIRECTORY
                 var imageFileNames = ["../../pictures/TR3/tr3.aldwych.1d.png", "../../pictures/TR3/tr3.aldwych.37m.png", "../../pictures/TR3/tr3.aldwych.55e.png", "../../pictures/TR3/tr3.antarc.29m.png", "../../pictures/TR3/tr3.antarc.57m.png", "../../pictures/TR3/tr3.antarc.93d.png", 
@@ -243,7 +285,7 @@
                 "../../pictures/TR3/tr3.coastal.186e.png": "coastal village", 
                 "../../pictures/TR3/tr3.hallows.25d.png": "all hallows", 
                 "../../pictures/TR3/tr3.temple.200e.png": "temple ruins",
-                "../../pictures/TR3/tr3.kaliya.7m.png": "saves of kaliya", 
+                "../../pictures/TR3/tr3.kaliya.7m.png": "caves of kaliya", 
                 "../../pictures/TR3/tr3.luds.154m.png": "lud's gate", 
                 "../../pictures/TR3/tr3.puna.13m.png": "temple of puna",
                 };
@@ -293,7 +335,6 @@
                 document.getElementById("result").innerHTML = resultMessage;
             }
 
-
         var selectedImages = [];
 
         var selectedImageIndices = [];
@@ -326,12 +367,9 @@
 
             // Use a closure to capture the current value of 'i'
             (function(index) {
-                clueButton.addEventListener("click", function (event) {
-                    var index = selectedImageIndices.indexOf(index);
-                    if (index !== -1) {
-                        var clue = getClueForImage(imageFileNames[selectedImageIndices[index]]);
-                        alert(clue);
-                    }
+                clueButton.addEventListener("click", function(event) {
+                    var clue = getClueForImage(selectedImages[index]);
+                    alert(clue);
                 });
             })(i);
 
@@ -399,21 +437,24 @@
                 return;
             }
 
+            // Update the button text
             updateButtonText();
-
-            var selectedImageIndices = [];
-            while (selectedImageIndices.length < numberOfSelectedImages) {
-                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
-                if (!selectedImageIndices.includes(randomIndex)) {
-                    selectedImageIndices.push(randomIndex);
-                }
-            }
 
             // Clear the riddles container before adding new images
             var riddlesContainer = document.getElementById("riddles-container");
             riddlesContainer.innerHTML = "";
 
             // Load images dynamically
+            selectedImages = [];
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                    selectedImages.push(imageFileNames[randomIndex]);
+                }
+            }
+
             selectedImageIndices.forEach(function (index) {
                 var riddleDiv = document.createElement("div");
                 riddleDiv.classList.add("riddle");
@@ -448,6 +489,14 @@
             // Reset result message
             document.getElementById("result").innerHTML = "";
         }
+
+        // Function to update button text
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+
     </script>
 </body>
 </html>

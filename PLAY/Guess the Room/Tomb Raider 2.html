@@ -54,12 +54,36 @@
         border-radius: 5px;
         margin: 10px;
         }
+
+        .mode-toggle {
+        background-color:#00ff37;
+        color: rgb(0, 0, 0);
+        border: 0.5mm ridge rgb(0, 0, 0);
+        padding: 15px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 10px;
+        }
+
+        .light-mode {
+        background-color: #ffffff;
+        color: #000000;
+        }
+        .dark-mode {
+        background-color: #252525;
+        color: #ffffff;
+        }
     </style>
 
 </head>
 <body>
     <h1><font size=10><font color=#B404AE>TOMB RAIDER ROOM GUESSER</font size></font color></h1>
-    <br><font size=2>Beta v0.2.0</font size>
+    <br><font size=2>Beta v0.3.0</font size>
+        <p></p>
+    <br><b><font size=4><font color=#f06292>credits to bianca for helping out with many TR2 pictures YEP</font></b>
+        <p></p>
+        <button id="mode-toggle" class="change-amount-button">Switch Light- / Dark Mode</button>
         <p></p>
         <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change amount of pictures (10)</button>
     <p></p>
@@ -81,6 +105,26 @@
     <div id="result"></div>
     
     <script>
+        //background color script:
+        const toggleButton = document.getElementById('mode-toggle');
+            const body = document.body;
+
+            // check if mode saved
+            const currentMode = localStorage.getItem('mode');
+            if (currentMode) {
+                body.classList.add(currentMode);
+            }
+
+            // function to switch mode
+            toggleButton.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('mode', 'light-mode');
+                } else {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('mode', 'dark-mode');
+                }
+            });
         //EVERYTHING RELATED TO LEVELS - EDIT WHEN CHANGING PICTURES OR ADDING OR REMOVING
             //RAW IMAGE FILES DIRECTORY
                 var imageFileNames = ["../../pictures/TR2/tr2.bark.10m.png", "../../pictures/TR2/tr2.bark.39m.png", "../../pictures/TR2/tr2.bark.55e.png", "../../pictures/TR2/tr2.bartoli.106e.png", "../../pictures/TR2/tr2.bartoli.131d.png",
@@ -90,7 +134,22 @@
                     "../../pictures/TR2/tr2.living.38m.png", "../../pictures/TR2/tr2.maria.11d.png", "../../pictures/TR2/tr2.maria.49m.png", "../../pictures/TR2/tr2.maria.76d.png", "../../pictures/TR2/tr2.maria.80m.png", "../../pictures/TR2/tr2.opera.104e.png", 
                     "../../pictures/TR2/tr2.opera.111d.png", "../../pictures/TR2/tr2.rig.19m.png", "../../pictures/TR2/tr2.rig.55m.png", "../../pictures/TR2/tr2.tibet.15e.png", "../../pictures/TR2/tr2.tibet.55d.png", "../../pictures/TR2/tr2.tibet.67m.png", 
                     "../../pictures/TR2/tr2.venice.0d.png", "../../pictures/TR2/tr2.venice.139d.png", "../../pictures/TR2/tr2.wall.37m.png", "../../pictures/TR2/tr2.wall.75m.png", "../../pictures/TR2/tr2.xian.17d.png", "../../pictures/TR2/tr2.xian.35d.png", 
-                    "../../pictures/TR2/tr2.xian.92m.png", "../../pictures/TR2/tr2.xian.155e.png", "../../pictures/TR2/tr2.xian.138e.png", "../../pictures/TR2/tr2.xian.151d.png"]; // enter file name with the file type e.g. pictures/egg.jpg
+                    "../../pictures/TR2/tr2.xian.92m.png", "../../pictures/TR2/tr2.xian.155e.png", "../../pictures/TR2/tr2.xian.138e.png", "../../pictures/TR2/tr2.xian.151d.png",
+                    //from bianca
+                    "../../pictures/TR2/tr2.wall.38e1.png", "../../pictures/TR2/tr2.wall.38e2.png", "../../pictures/TR2/tr2.wall.61e.png", "../../pictures/TR2/tr2.wall.65m.png", "../../pictures/TR2/tr2.wall.83e.png", "../../pictures/TR2/tr2.venice.88m.png", 
+                    "../../pictures/TR2/tr2.venice.129m.png", "../../pictures/TR2/tr2.bartoli.110m.png", "../../pictures/TR2/tr2.bartoli.135m.png", "../../pictures/TR2/tr2.bartoli.163m.png", "../../pictures/TR2/tr2.bartoli.70d3.png", "../../pictures/TR2/tr2.bartoli.70e1.png", 
+                    "../../pictures/TR2/tr2.bartoli.70e4.png", "../../pictures/TR2/tr2.bartoli.70m2.png", "../../pictures/TR2/tr2.opera.4e.png", "../../pictures/TR2/tr2.opera.53e.png",
+                    "../../pictures/TR2/tr2.opera.123m.png", "../../pictures/TR2/tr2.opera.108e.png", "../../pictures/TR2/tr2.opera.62e.png", "../../pictures/TR2/tr2.opera.105e.png", "../../pictures/TR2/tr2.opera.105e2.png", "../../pictures/TR2/tr2.opera.133e.png", 
+                    "../../pictures/TR2/tr2.opera.58m.png", "../../pictures/TR2/tr2.rig.93m.png", "../../pictures/TR2/tr2.rig.11m.png", "../../pictures/TR2/tr2.rig.50e.png", "../../pictures/TR2/tr2.diving.48m.png", "../../pictures/TR2/tr2.diving.75m.png", 
+                    "../../pictures/TR2/tr2.fathoms.21m.png", "../../pictures/TR2/tr2.fathoms.49d.png", "../../pictures/TR2/tr2.wreck.76e.png", "../../pictures/TR2/tr2.wreck.71m.png", "../../pictures/TR2/tr2.wreck.46e.png", "../../pictures/TR2/tr2.wreck.47m.png", 
+                    "../../pictures/TR2/tr2.wreck.56e.png", "../../pictures/TR2/tr2.wreck.49e.png", "../../pictures/TR2/tr2.wreck.51m.png", "../../pictures/TR2/tr2.living.27e.png", "../../pictures/TR2/tr2.living.15m.png", "../../pictures/TR2/tr2.living.25m.png", 
+                    "../../pictures/TR2/tr2.deck.65d.png", "../../pictures/TR2/tr2.deck.83m.png", "../../pictures/TR2/tr2.deck.15d.png", "../../pictures/TR2/tr2.foothills.137m.png", "../../pictures/TR2/tr2.monastery.8e.png", 
+                    "../../pictures/TR2/tr2.monastery.108e.png", "../../pictures/TR2/tr2.monastery.10e.png", "../../pictures/TR2/tr2.monastery.99m.png", "../../pictures/TR2/tr2.catacombs.2e.png", "../../pictures/TR2/tr2.catacombs.63e.png", "../../pictures/TR2/tr2.catacombs.36d.png", 
+                    "../../pictures/TR2/tr2.catacombs.11m.png", "../../pictures/TR2/tr2.icecave.107.png", "../../pictures/TR2/tr2.icecave.66m.png", "../../pictures/TR2/tr2.icecave.34e1.png", "../../pictures/TR2/tr2.icecave.34d2.png", "../../pictures/TR2/tr2.icecave.126m.png", 
+                    "../../pictures/TR2/tr2.xian.19e.png", "../../pictures/TR2/tr2.xian.35m.png", "../../pictures/TR2/tr2.xian.43m.png", "../../pictures/TR2/tr2.xian.62m.png", "../../pictures/TR2/tr2.xian.14e.png", "../../pictures/TR2/tr2.floating.29e.png", 
+                    "../../pictures/TR2/tr2.floating.135m1.png", "../../pictures/TR2/tr2.floating.135m2.png", "../../pictures/TR2/tr2.floating.101m.png", "../../pictures/TR2/tr2.floating.45e.png", "../../pictures/TR2/tr2.floating123m.png", "../../pictures/TR2/tr2.dragon.18m1.png", "../../pictures/TR2/tr2.dragon.21d.png", 
+                    "../../pictures/TR2/tr2.dragon.18m2.png",
+                    "../../pictures/TR2/tr2.wall.42e.png"]; // enter file name with the file type e.g. pictures/egg.jpg
             //CLUES FOR IMAGES
                 function getClueForImage(imageSrc) {
                     var clueMap = {
@@ -136,6 +195,79 @@
                         "tr2.xian.155e.png": "congrats, you didn't die to the knifes if you made it here", 
                         "tr2.xian.138e.png": "The summoning-ball of Arachnophobia", 
                         "tr2.xian.151d.png": "the key which can be picked here is removed",
+                        //bianca
+                        "tr2.wall.38e1.png": "Looking for a clue? You’ve found one! A-ha!", 
+                        "tr2.wall.38e2.png": "Looking for a clue? You’ve found one! A-ha!",
+                        "tr2.wall.42e.png": "Not even six legs are enough to reach it.",
+                        "tr2.wall.61e.png": "Extinction was a lie…", 
+                        "tr2.wall.65m.png": "“With a clue on my keyring!”", 
+                        "tr2.wall.83e.png": "follow me, and you’ll find something gold shining.", 
+                        "tr2.venice.88m.png": "Find the antenna for a better signal.",
+                        "tr2.venice.129m.png": "Did you hear that? Are the bells ringing?",
+                        "tr2.bartoli.110m.png": "Congratulations! You didn’t get cut!",
+                        "tr2.bartoli.135m.png": "Want to go to the Opera? You have to slide first.",
+                        "tr2.bartoli.163m.png": "Wanna hide somewhere? Here, a jump and you’re in.",
+                        "tr2.bartoli.70d3.png": "Mobsters too like chilling and fruit.",
+                        "tr2.bartoli.70e1.png": "Mobsters too like chilling and fruit.",
+                        "tr2.bartoli.70e4.png": "Mobsters too like chilling and fruit.",
+                        "tr2.bartoli.70m2.png": "Mobsters too like chilling and fruit.",
+                        "tr2.opera.4e.png": "There are three of us and all we do, is watch a box swinging through.",
+                        "tr2.opera.53e.png": "It’s show time!",
+                        "tr2.opera.123m.png": "A nice place to storage.",
+                        "tr2.opera.108e.png": "Use the chair carefully if you don’t like to be flattened.",
+                        "tr2.opera.62e.png": "Sometimes the show is up.",
+                        "tr2.opera.105e.png": "Need help? “Hang” in there.",
+                        "tr2.opera.105e2.png": "Do you really need a clue?",
+                        "tr2.opera.133e.png": "“Eros, have you fixed that rail yet?”",
+                        "tr2.opera.58m.png": "Act 2, scene 4.",
+                        "tr2.rig.93m.png": "I can touch the sea and I can touch the sky.",
+                        "tr2.rig.11m.png": "In front of me not bird’s wings you’ll see, but wings indeed.",
+                        "tr2.rig.50e.png": "A breath of fresh air.",
+                        "tr2.diving.48m.png": "Don’t be deceived, green is death, so be aware and jump with care.",
+                        "tr2.diving.75m.png": "Take your time, this will be a long climb.",
+                        "tr2.fathoms.21m.png": "If you are looking for me, orange and blue it’s all you’ll see.",
+                        "tr2.fathoms.49d.png": "Ventilation grids by my sides, but in front of me a lever hides.",
+                        "tr2.wreck.76e.png": "Once here blue you used to find, now look at me for blue of a different kind.",
+                        "tr2.wreck.71m.png": "I used to help, now I’m not free, forever trapped in the deepest sea.",
+                        "tr2.wreck.46e.png": "I’m not alone, I’m full of twins, and all we did was look all swim.",
+                        "tr2.wreck.47m.png": "Here they lay, safe and sound, now I am the one on the ground.",
+                        "tr2.wreck.56e.png": "Balcony? Stairs? Yes, I’m right there.",
+                        "tr2.wreck.49e.png": "What I was now I’m not, a new view, now on top.",
+                        "tr2.wreck.51m.png": "Take a coffee or take a tea, take a seat and look at me.",
+                        "tr2.living.27e.png": "Careful, these edges are not as sharp as the glass ahead.",
+                        "tr2.living.15m.png": "Beware of what lurks in the shadows.",
+                        "tr2.living.25m.png": "From the windows you will see blue caves of the deepest sea.",
+                        "tr2.deck.65d.png": "You made it this far and so it means: you took a jump and fell right here.",
+                        "tr2.deck.83m.png": "If you are lost you must begin, the search for what could spin.",
+                        "tr2.deck.15d.png": "If you are here you know it’s true that your health made it through.",
+                        "tr2.foothills.137m.png": "Time to catJAM!",
+                        "tr2.monastery.8e.png": "Follow me, I’ll take you through, somewhere with a mighty view.",
+                        "tr2.monastery.108e.png": "Four lights will guide you here.",
+                        "tr2.monastery.10e.png": "Should I tell you a lil secret? Here it lies a key item.",
+                        "tr2.monastery.99m.png": "If you want to find inner peace, you must go around me. ",
+                        "tr2.catacombs.2e.png": "Here you know that you can find, something for your own disguise.",
+                        "tr2.catacombs.63e.png": "It’s all white, as you can see, it’s not so hard to spot me.",
+                        "tr2.catacombs.36d.png": "I’m not sure what you see, but something hot lies here.",
+                        "tr2.catacombs.11m.png": "There’s four of us.",
+                        "tr2.icecave.107.png": "This clue is golden.",
+                        "tr2.icecave.66m.png": "Here you went already once, but give the door a second glance.",
+                        "tr2.icecave.34e1.png": "Five of us but it’s just me, that alone is meant to be. ",
+                        "tr2.icecave.34d2.png": "Five of us but it’s just me, that alone is meant to be. ",
+                        "tr2.icecave.126m.png": "Be aware of what ice hides, someone big to kill will try.",
+                        "tr2.xian.19e.png": "Here it was what everyone was looking for.",
+                        "tr2.xian.35m.png": "Hot and red, you don’t want to fall, if you made it here you didn’t burn. ",
+                        "tr2.xian.43m.png": "Don’t be scared, we can’t kill; we guard here while standing still.",
+                        "tr2.xian.62m.png": "If you are looking for some aid, find eyes and horns as green as jade.",
+                        "tr2.xian.14e.png": "From here you enter but be aware, cause more perils are ahead.",
+                        "tr2.floating.29e.png": "Six eyes are guarding.",
+                        "tr2.floating.135m1.png": "A cage in the green.",
+                        "tr2.floating.135m2.png": "A cage in the green.",
+                        "tr2.floating.101m.png": "You can’t float, so here’s your clue: to not fall you walk it through.",
+                        "tr2.floating.45e.png": "Only when you’ve found two keys, you’ll get a chance to look at me.",
+                        "tr2.floating.123m.png": "Here it is, your last step, if you want to be in his nest.",
+                        "tr2.dragon.18m1.png": "It will make your eyes open wide; all you want to do will be to hide.",
+                        "tr2.dragon.21d.png": "Run as fast as you can, you are now near the end",
+                        "tr2.dragon.18m2.png": "Once a man, now no more.",
                     };
                     // Extract the filename from the imageSrc
                     var filename = imageSrc.split('/').pop();
@@ -192,6 +324,80 @@
                     "../../pictures/TR2/tr2.xian.155e.png": "155", 
                     "../../pictures/TR2/tr2.xian.138e.png": "138", 
                     "../../pictures/TR2/tr2.xian.151d.png": "151",
+                    //bianca
+                    "../../pictures/TR2/tr2.wall.38e1.png": "38",
+                    "../../pictures/TR2/tr2.wall.38e2.png": "38",
+                    "../../pictures/TR2/tr2.wall.61e.png": "61",
+                    "../../pictures/TR2/tr2.wall.65m.png": "65",
+                    "../../pictures/TR2/tr2.wall.83e.png": "83",
+                    "../../pictures/TR2/tr2.venice.88m.png": "88",
+                    "../../pictures/TR2/tr2.venice.129m.png": "129",
+                    "../../pictures/TR2/tr2.bartoli.110m.png": "110",
+                    "../../pictures/TR2/tr2.bartoli.135m.png": "135",
+                    "../../pictures/TR2/tr2.bartoli.163m.png": "163",
+                    "../../pictures/TR2/tr2.bartoli.70d3.png": "70",
+                    "../../pictures/TR2/tr2.bartoli.70e1.png": "70",
+                    "../../pictures/TR2/tr2.bartoli.70e4.png": "70",
+                    "../../pictures/TR2/tr2.bartoli.70m2.png": "70",
+                    "../../pictures/TR2/tr2.opera.4e.png": "4",
+                    "../../pictures/TR2/tr2.opera.53e.png": "53",
+                    "../../pictures/TR2/tr2.opera.123m.png": "123",
+                    "../../pictures/TR2/tr2.opera.108e.png": "108",
+                    "../../pictures/TR2/tr2.opera.62e.png": "62",
+                    "../../pictures/TR2/tr2.opera.105e.png": "105",
+                    "../../pictures/TR2/tr2.opera.105e2.png": "105",
+                    "../../pictures/TR2/tr2.opera.133e.png": "133",
+                    "../../pictures/TR2/tr2.opera.58m.png": "58",
+                    "../../pictures/TR2/tr2.rig.93m.png": "93",
+                    "../../pictures/TR2/tr2.rig.11m.png": "11",
+                    "../../pictures/TR2/tr2.rig.50e.png": "50",
+                    "../../pictures/TR2/tr2.diving.48m.png": "48",
+                    "../../pictures/TR2/tr2.diving.75m.png": "75",
+                    "../../pictures/TR2/tr2.fathoms.21m.png": "21",
+                    "../../pictures/TR2/tr2.fathoms.49d.png": "49",
+                    "../../pictures/TR2/tr2.wreck.76e.png": "76",
+                    "../../pictures/TR2/tr2.wreck.71m.png": "71",
+                    "../../pictures/TR2/tr2.wreck.46e.png": "46",
+                    "../../pictures/TR2/tr2.wreck.47m.png": "47",
+                    "../../pictures/TR2/tr2.wreck.56e.png": "56",
+                    "../../pictures/TR2/tr2.wreck.49e.png": "49",
+                    "../../pictures/TR2/tr2.wreck.51m.png": "51",
+                    "../../pictures/TR2/tr2.living.27e.png": "27",
+                    "../../pictures/TR2/tr2.living.15m.png": "15",
+                    "../../pictures/TR2/tr2.living.25m.png": "25",
+                    "../../pictures/TR2/tr2.deck.65d.png": "65",
+                    "../../pictures/TR2/tr2.deck.83m.png": "83",
+                    "../../pictures/TR2/tr2.deck.15d.png": "15",
+                    "../../pictures/TR2/tr2.foothills.137m.png": "137",
+                    "../../pictures/TR2/tr2.monastery.8e.png": "8",
+                    "../../pictures/TR2/tr2.monastery.108e.png": "108",
+                    "../../pictures/TR2/tr2.monastery.10e.png": "10",
+                    "../../pictures/TR2/tr2.monastery.99m.png": "99",
+                    "../../pictures/TR2/tr2.catacombs.2e.png": "2",
+                    "../../pictures/TR2/tr2.catacombs.63e.png": "63",
+                    "../../pictures/TR2/tr2.catacombs.36d.png": "36",
+                    "../../pictures/TR2/tr2.catacombs.11m.png": "11",
+                    "../../pictures/TR2/tr2.icecave.107.png": "107",
+                    "../../pictures/TR2/tr2.icecave.66m.png": "66",
+                    "../../pictures/TR2/tr2.icecave.34e1.png": "34",
+                    "../../pictures/TR2/tr2.icecave.34d2.png": "34",
+                    "../../pictures/TR2/tr2.icecave.126m.png": "126",
+                    "../../pictures/TR2/tr2.xian.19e.png": "19",
+                    "../../pictures/TR2/tr2.xian.35m.png": "35",
+                    "../../pictures/TR2/tr2.xian.43m.png": "43",
+                    "../../pictures/TR2/tr2.xian.62m.png": "62",
+                    "../../pictures/TR2/tr2.xian.14e.png": "14",
+                    "../../pictures/TR2/tr2.floating.29e.png": "29",
+                    "../../pictures/TR2/tr2.floating.135m1.png": "135",
+                    "../../pictures/TR2/tr2.floating.135m2.png": "135",
+                    "../../pictures/TR2/tr2.floating.101m.png": "101",
+                    "../../pictures/TR2/tr2.floating.45e.png": "45",
+                    "../../pictures/TR2/tr2.floating.123m.png": "123",
+                    "../../pictures/TR2/tr2.dragon.18m1.png": "18",
+                    "../../pictures/TR2/tr2.dragon.21d.png": "21",
+                    "../../pictures/TR2/tr2.dragon.18m2.png": "18",
+                    "../../pictures/TR2/tr2.wall.42e.png": "42",
+
                 // more pictures added same way, picture name with file type in first "", expected answer in second "",
                 };
 
@@ -199,17 +405,21 @@
 
                     var totalCorrect = 0;
 
-                    var riddles = document.getElementsByClassName("riddle");
+                var riddles = document.getElementsByClassName("riddle");
                     for (var i = 0; i < riddles.length; i++) {
                         var image = riddles[i].querySelector("img");
                         var input = riddles[i].querySelector("input");
                         var imageName = image.getAttribute("src");
                         var playerAnswer = input.value.toLowerCase();
 
+                        // Remove the 'correct-answer' and 'wrong-answer' classes to reset colors
+                        input.classList.remove("correct-answer");
+                        input.classList.remove("wrong-answer");
+
                         // If input is not empty or just spaces
                         if (playerAnswer.trim() === "") {
                             playerAnswer = "Blank";
-                            }
+                        }
 
                         if (correctAnswers[imageName]) {
                             var correctAnswer = correctAnswers[imageName];
@@ -217,28 +427,27 @@
                             // check for mistake
                             if (isCloseEnough(playerAnswer, correctAnswer)) {
                                 totalCorrect++;
-                                input.classList.add("correct-answer"); // Füge die CSS-Klasse hinzu
+                                input.classList.add("correct-answer"); // Add 'correct-answer' class
                             } else {
                                 wrongAnswers[playerAnswer] = correctAnswer;
-                                input.classList.add("wrong-answer"); // Füge die CSS-Klasse hinzu
+                                input.classList.add("wrong-answer"); // Add 'wrong-answer' class
                             }
                         }
                     }
-                    var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
-                    var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
-                    if (Object.keys(wrongAnswers).length > 0) {
-                        resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
-                        for (var playerAnswer in wrongAnswers) {
-                            resultMessage += "<br>" + playerAnswer;
-                        }
+                var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
+                var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
+                if (Object.keys(wrongAnswers).length > 0) {
+                    resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
+                    for (var playerAnswer in wrongAnswers) {
+                        resultMessage += "<br>" + playerAnswer;
                     }
-
-                    document.getElementById("result").innerHTML = resultMessage;
                 }
-                
+
+                document.getElementById("result").innerHTML = resultMessage;
+            }
 
         var selectedImages = [];
-        
+
         var selectedImageIndices = [];
         while (selectedImageIndices.length < 10) {
             var randomIndex = Math.floor(Math.random() * imageFileNames.length);
@@ -253,28 +462,25 @@
         for (var i = 0; i < selectedImages.length; i++) {
             var riddleDiv = document.createElement("div");
             riddleDiv.classList.add("riddle");
-    
+
             var img = document.createElement("img");
             img.src = selectedImages[i];
             img.alt = "Picture " + (i + 1);
-    
+
             var input = document.createElement("input");
             input.type = "text";
             input.style = "width: 300px; height: 40px";
-            input.placeholder = "Enter Room number:";
-    
+            input.placeholder = "Enter room number:";
+
             var clueButton = document.createElement("button");
             clueButton.textContent = "Get a Clue";
             clueButton.classList.add("clue-button");
 
             // Use a closure to capture the current value of 'i'
             (function(index) {
-                clueButton.addEventListener("click", function (event) {
-                    var index = selectedImageIndices.indexOf(index);
-                    if (index !== -1) {
-                        var clue = getClueForImage(imageFileNames[selectedImageIndices[index]]);
-                        alert(clue);
-                    }
+                clueButton.addEventListener("click", function(event) {
+                    var clue = getClueForImage(selectedImages[index]);
+                    alert(clue);
                 });
             })(i);
 
@@ -293,6 +499,9 @@
             var button = document.getElementById("change-amount-button");
             button.textContent = buttonText;
         }
+        
+        
+
 
         function fillWrongAnswers() {
             var riddles = document.getElementsByClassName("riddle");
@@ -311,7 +520,7 @@
         
         // check if there's a mistake and how close it has to be
         function isCloseEnough(str1, str2) {
-            var maxErrors = 0; // amount of max possible mistakes
+            var maxErrors = 2; // amount of max possible mistakes
             var errors = 0;
             
             for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
@@ -339,21 +548,24 @@
                 return;
             }
 
+            // Update the button text
             updateButtonText();
-
-            var selectedImageIndices = [];
-            while (selectedImageIndices.length < numberOfSelectedImages) {
-                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
-                if (!selectedImageIndices.includes(randomIndex)) {
-                    selectedImageIndices.push(randomIndex);
-                }
-            }
 
             // Clear the riddles container before adding new images
             var riddlesContainer = document.getElementById("riddles-container");
             riddlesContainer.innerHTML = "";
 
             // Load images dynamically
+            selectedImages = [];
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                    selectedImages.push(imageFileNames[randomIndex]);
+                }
+            }
+
             selectedImageIndices.forEach(function (index) {
                 var riddleDiv = document.createElement("div");
                 riddleDiv.classList.add("riddle");
@@ -388,6 +600,14 @@
             // Reset result message
             document.getElementById("result").innerHTML = "";
         }
+
+        // Function to update button text
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+
     </script>
 </body>
 </html>
