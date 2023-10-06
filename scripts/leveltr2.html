@@ -32,8 +32,27 @@
     <script>
         const riddleData = {
             type: 'LEVEL',
-            folder: '../pictures/TR2/',
+            levels: [
+                "40 Fathoms",
+                "Barkhang Monastery",
+                "Bartoli's Hideout",
+                "Catacombs of the Talion",
+                "Diving Area",
+                "Floating Islands",
+                "Ice Palace",
+                "Living Quarters",
+                "Offshore Rig",
+                "Opera House",
+                "Temple of Xian",
+                "The Deck",
+                "The Dragon's Lair",
+                "The Great Wall",
+                "Tibetan Foothills",
+                "Venice",
+                "Wreck of the Maria Doria",
+            ],
 
+            folder: '../pictures/TR2/',
             images: {
                 "tr2.bark.10m.png": { solution: "barkhang monastery", hint: "don't disturb the monks!" },
                 "tr2.bark.39m.png": { solution: "barkhang monastery", hint: "pay attention or you might die to a spindle" },
@@ -159,27 +178,8 @@
                 "tr2.wall.42e.png": { solution: "the great wall", hint: "Not even six legs are enough to reach it." },
             }
         };
-        const levelNames = [
-            "40 Fathoms",
-            "Barkhang Monastery",
-            "Bartoli's Hideout",
-            "Catacombs of the Talion",
-            "Diving Area",
-            "Floating Islands",
-            "Ice Palace",
-            "Living Quarters",
-            "Offshore Rig",
-            "Opera House",
-            "Temple of Xian",
-            "The Deck",
-            "The Dragon's Lair",
-            "The Great Wall",
-            "Tibetan Foothills",
-            "Venice",
-            "Wreck of the Maria Doria", /* Weitere Levelnamen hier einfügen */
-        ];
     </script>
-    <script src="LevelScript.js"></script>
+    <script src="guesser.js"></script>
     <script src="switchstyle.js"></script>
 </body>
 </html>

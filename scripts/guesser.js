@@ -1,8 +1,3 @@
-// Add the key of each image as source to the entry so the entries by themselves are fully defined
-for (let key of Object.keys(riddleData.images)) {
-    riddleData.images[key].source = key;
-}
-
 function returnToMenu() {
     window.location.href = "../TR Guesser.html";
 }
@@ -72,17 +67,7 @@ function addImagesToPage(imageEntries) {
     const riddlesContainer = document.getElementById('riddles-container');
     riddlesContainer.innerHTML = '';
 
-    // Fügen Sie ein datalist-Element hinzu
-    const datalist = document.createElement('datalist');
-    datalist.id = 'level-suggestions';
-
-    for (const levelName of levelNames) {
-        const option = document.createElement('option');
-        option.value = levelName;
-        datalist.appendChild(option);
-    }
-
-    riddlesContainer.appendChild(datalist);
+    const hasLevelSuggestions = document.getElementById('level-suggestions') !== null;
 
     for (const imageEntry of imageEntries) {
         const riddleDiv = document.createElement('div');
@@ -96,8 +81,9 @@ function addImagesToPage(imageEntries) {
         inputElem.classList.add('answer');
         inputElem.placeholder = riddleData.type === 'ROOM' ? 'Enter room number' : 'Enter level name';
         
-        // Fügen Sie das datalist-Attribut hinzu
-        inputElem.setAttribute('list', 'level-suggestions');
+        if (hasLevelSuggestions) {
+            inputElem.setAttribute('list', 'level-suggestions');
+        }
 
         const clueButton = document.createElement('button');
         clueButton.textContent = 'Get a clue';
@@ -168,15 +154,31 @@ function promptNewNumberOfImages() {
     const newImages = selectRiddleEntries(newNumberOfImages);
     addImagesToPage(newImages);
     document.getElementById('result').innerHTML = '';
-
-    const levelSuggestionsList = document.getElementById('level-suggestions');
-    levelSuggestionsList.innerHTML = '';
-
-    levelSuggestions.forEach((level) => {
-        const option = document.createElement('option');
-        option.value = level;
-        levelSuggestionsList.appendChild(option);
-    });
 }
 
-addImagesToPage(selectRiddleEntries(10));
+function initializeQuiz() {
+    // Add the key of each image as source to the entry so the entries by themselves are fully defined
+    for (let key of Object.keys(riddleData.images)) {
+        riddleData.images[key].source = key;
+    }
+
+    // Create a datalist element, if applicable
+    if (riddleData.type === 'LEVEL') {
+        const datalist = document.createElement('datalist');
+        datalist.id = 'level-suggestions';
+
+        for (const levelName of riddleData.levels) {
+            const option = document.createElement('option');
+            option.value = levelName;
+            datalist.appendChild(option);
+        }
+
+        const riddlesContainer = document.getElementById('riddles-container');
+        riddlesContainer.parentElement.appendChild(datalist);
+    }
+
+    addImagesToPage(selectRiddleEntries(10));
+}
+
+
+initializeQuiz();

@@ -34,8 +34,30 @@
     <script>
         const riddleData = {
             type: 'LEVEL',
-            folder: '../pictures/TR3/',
+            levels: [
+                "Aldwych",
+                "All Hallows",
+                "Antarctica",
+                "Area 51",
+                "Caves of Kaliya",
+                "City",
+                "Coastal Village",
+                "Crash Site",
+                "High Security Compound",
+                "Jungle",
+                "Lud's Gate",
+                "Madubu Gorge",
+                "Meteorite Cavern",
+                "Nevada Desert",
+                "RX-Tech Mines",
+                "Temple of Puna",
+                "Temple Ruins",
+                "The River Ganges",
+                "Thames Wharf",
+                "Lost City of Tinnos",
+            ],
 
+            folder: '../pictures/TR3/',
             images: {
                 "tr3.aldwych.1d.png": { solution: "aldwych", hint: "a crystal can be found in this room" },
                 "tr3.aldwych.37m.png": { solution: "aldwych", hint: "you need to pay here!" },
@@ -103,30 +125,8 @@
                 "tr3.tinnos.101e.png": { solution: "lost city of tinnos", hint: "let the fight begin!" },
             }
         };
-        const levelNames = [
-            "Aldwych",
-            "All Hallows",
-            "Antarctica",
-            "Area 51",
-            "Caves of Kaliya",
-            "City",
-            "Coastal Village",
-            "Crash Site",
-            "High Security Compound",
-            "Jungle",
-            "Lud's Gate",
-            "Madubu Gorge",
-            "Meteorite Cavern",
-            "Nevada Desert",
-            "RX-Tech Mines",
-            "Temple of Puna",
-            "Temple Ruins",
-            "The River Ganges",
-            "Thames Wharf",
-            "Lost City of Tinnos", /* Weitere Levelnamen hier einfügen */
-        ];
     </script>
-    <script src="LevelScript.js"></script>
+    <script src="guesser.js"></script>
     <script src="switchstyle.js"></script>
 </body>
 </html>
