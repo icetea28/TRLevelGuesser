@@ -1,4 +1,11 @@
+v0.2.1
+- Added more TR3 pictures thanks to gui
+- Corrected wrong answers will show green background any won't stay red
+- "Change amount of pictures"-Button layout in room guesser is fixed
+- Fixed that clue button disappears when changing picture amount
+
 v0.2.0
+https://drive.google.com/file/d/1yG56lcAyBLY7249N3HeXnNmj0TaNVznv/view?usp=sharing
 - Added TR2 pictures
 
 v0.1.3

@@ -61,7 +61,7 @@
     <h1><font size=10><font color=#B404AE>TOMB RAIDER ROOM GUESSER</font size></font color></h1>
     <br><font size=2>Beta v0.2.0</font size>
         <p></p>
-        <button id="change-amount-button" onclick="startGame()">Change amount of pictures (10)</button>
+        <button id="change-amount-button" class="change-amount-button" onclick="imageAmount()">Change amount of pictures (10)</button>
     <p></p>
     <h2><b><font size="5">Rules and Information:</font></b></h2>
     <p><font size="4"> - Enter the number of the room in the box next to each picture
@@ -269,9 +269,12 @@
 
             // Use a closure to capture the current value of 'i'
             (function(index) {
-                clueButton.addEventListener("click", function(event) {
-                    var clue = getClueForImage(selectedImages[index]);
-                    alert(clue);
+                clueButton.addEventListener("click", function (event) {
+                    var index = selectedImageIndices.indexOf(index);
+                    if (index !== -1) {
+                        var clue = getClueForImage(imageFileNames[selectedImageIndices[index]]);
+                        alert(clue);
+                    }
                 });
             })(i);
 
@@ -328,13 +331,13 @@
         
         var numberOfSelectedImages = 10;
 
-        function startGame() {
+        function imageAmount() {
             numberOfSelectedImages = parseInt(prompt("Enter the number of images you want to guess (up to 10):"));
 
             if (isNaN(numberOfSelectedImages) || numberOfSelectedImages <= 0 || numberOfSelectedImages > 10) {
                 alert("Please enter a valid number between 1 and 10.");
                 return;
-                }
+            }
 
             updateButtonText();
 
@@ -351,7 +354,7 @@
             riddlesContainer.innerHTML = "";
 
             // Load images dynamically
-            selectedImageIndices.forEach(function(index) {
+            selectedImageIndices.forEach(function (index) {
                 var riddleDiv = document.createElement("div");
                 riddleDiv.classList.add("riddle");
 
@@ -364,8 +367,19 @@
                 input.style = "width: 300px; height: 40px";
                 input.placeholder = "Enter Room number:";
 
+                var clueButton = document.createElement("button");
+                clueButton.textContent = "Get a Clue";
+                clueButton.classList.add("clue-button");
+
+                // Use a closure to capture the current value of 'index'
+                clueButton.addEventListener("click", function (event) {
+                    var clue = getClueForImage(selectedImages[index]);
+                    alert(clue);
+                });
+
                 riddleDiv.appendChild(img);
                 riddleDiv.appendChild(input);
+                riddleDiv.appendChild(clueButton);
 
                 riddlesContainer.appendChild(riddleDiv);
                 riddlesContainer.appendChild(document.createElement("br"));
