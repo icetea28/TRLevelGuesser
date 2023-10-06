@@ -1,0 +1,10 @@
+var selectedImageIndices = [];
+        while (selectedImageIndices.length < 10) {
+            var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+            if (!selectedImageIndices.includes(randomIndex)) {
+                selectedImageIndices.push(randomIndex);
+            }
+        }
+        var selectedImages = selectedImageIndices.map(function(index) {
+            return imageFileNames[index];
+        });

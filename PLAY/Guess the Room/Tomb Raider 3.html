@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TOMB RAIDER ROOM GUESSER</title>
+</head>
+<body>
+    <h1><font size=10><font color=#B404AE>TOMB RAIDER ROOM GUESSER</font size></font color></h1>
+    <p></p>
+    <h2><b><font size="5">Rules and Information:</font></b></h2>
+    <p><font size="4"> - Enter the number of the room in the box next to each picture
+        <br> - Use TRView and click into the room that is shown - at the top left is the number of the room
+        <br> - There is no margin for any mistakes
+        <br> - Answers are checked at the end of the Quiz
+        <br> - You will be able to see and correct your wrong Answers
+        <br> - You can reveal the solution for pictures you can't solve at the end 
+        <br> - Leaving out a picture may break the program when showing the solution - try to fill something in each box
+    </font></p>
+    
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+    
+    <button onclick="checkAnswers()">Check your Answers</button>
+    <button onclick="fillWrongAnswers()">Fill Wrong Answers</button>
+    
+    <div id="result"></div>
+    
+    <script>
+        var imageFileNames = ["../../pictures/TR3/tr3.aldwych.1.png", "../../pictures/TR3/tr3.aldwych.37.png", "../../pictures/TR3/tr3.aldwych.55.png", "../../pictures/TR3/tr3.antarc.29.png", "../../pictures/TR3/tr3.antarc.57.png", "../../pictures/TR3/tr3.antarc.93.png", 
+        "../../pictures/TR3/tr3.antarc.126.png", "../../pictures/TR3/tr3.area51.18.png", "../../pictures/TR3/tr3.area51.96.png", "../../pictures/TR3/tr3.cavern.5.png", "../../pictures/TR3/tr3.cavern.12.png", "../../pictures/TR3/tr3.cavern.27.png", 
+        "../../pictures/TR3/tr3.city.13.png", "../../pictures/TR3/tr3.coastal.121.png", "../../pictures/TR3/tr3.crash.29.png", "../../pictures/TR3/tr3.crash.72.png", "../../pictures/TR3/tr3.ganges.58.png", 
+        "../../pictures/TR3/tr3.ganges.100.png", "../../pictures/TR3/tr3.hallows.21.png", "../../pictures/TR3/tr3.jungle.83.png", "../../pictures/TR3/tr3.jungle.103.png", 
+        "../../pictures/TR3/tr3.kaliya.13.png", "../../pictures/TR3/tr3.kaliya.17.png", "../../pictures/TR3/tr3.luds.35.png", "../../pictures/TR3/tr3.luds.37.png", "../../pictures/TR3/tr3.luds.74.png", 
+        "../../pictures/TR3/tr3.madubu.53.png", "../../pictures/TR3/tr3.madubu.143.png", "../../pictures/TR3/tr3.nevada.113.png", "../../pictures/TR3/tr3.nevada.143.png", "../../pictures/TR3/tr3.puna.0.png", "../../pictures/TR3/tr3.rx.163.png", 
+        "../../pictures/TR3/tr3.rx.178.png", "../../pictures/TR3/tr3.temple.48.png", "../../pictures/TR3/tr3.temple.181.png", "../../pictures/TR3/tr3.thames.1.png", "../../pictures/TR3/tr3.thames.13.png", "../../pictures/TR3/tr3.thames.130.png", 
+        "../../pictures/TR3/tr3.tinnos.15.png", "../../pictures/TR3/tr3.tinnos.43.png", "../../pictures/TR3/tr3.tinnos.67.png", "../../pictures/TR3/tr3.tinnos.101.png"]; // enter file name with the file type e.g. pictures/egg.jpg
+        var selectedImageIndices = [];
+        while (selectedImageIndices.length < 10) {
+            var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+            if (!selectedImageIndices.includes(randomIndex)) {
+                selectedImageIndices.push(randomIndex);
+            }
+        }
+        var selectedImages = selectedImageIndices.map(function(index) {
+            return imageFileNames[index];
+        });
+        var riddlesContainer = document.getElementById("riddles-container");
+        for (var i = 0; i < selectedImages.length; i++) {
+            var riddleDiv = document.createElement("div");
+            riddleDiv.classList.add("riddle");
+    
+            var img = document.createElement("img");
+            img.src = selectedImages[i];
+            img.alt = "Picture " + (i + 1);
+    
+            var input = document.createElement("input");
+            input.type = "text";
+            input.style = "width: 300px; height: 40px";
+            input.placeholder = "Enter Levelname:";
+    
+            riddleDiv.appendChild(img);
+            riddleDiv.appendChild(input);
+    
+            riddlesContainer.appendChild(riddleDiv);
+
+            riddlesContainer.appendChild(document.createElement("br"));
+        }
+        
+        var wrongAnswers = {}; // declare outside functions
+        
+        function checkAnswers() {
+            var correctAnswers = {
+            "../../pictures/TR3/tr3.aldwych.1.png": "1", 
+            "../../pictures/TR3/tr3.aldwych.37.png": "37", 
+            "../../pictures/TR3/tr3.aldwych.55.png": "55", 
+            "../../pictures/TR3/tr3.antarc.29.png": "29", 
+            "../../pictures/TR3/tr3.antarc.57.png": "57", 
+            "../../pictures/TR3/tr3.antarc.93.png": "93", 
+            "../../pictures/TR3/tr3.antarc.126.png": "126", 
+            "../../pictures/TR3/tr3.area51.18.png": "18", 
+            "../../pictures/TR3/tr3.area51.96.png": "96", 
+            "../../pictures/TR3/tr3.cavern.5.png": "5", 
+            "../../pictures/TR3/tr3.cavern.12.png": "12", 
+            "../../pictures/TR3/tr3.cavern.27.png": "27", 
+            "../../pictures/TR3/tr3.city.13.png": "13", 
+            "../../pictures/TR3/tr3.coastal.121.png": "121", 
+            "../../pictures/TR3/tr3.crash.29.png": "29", 
+            "../../pictures/TR3/tr3.crash.72.png": "72", 
+            "../../pictures/TR3/tr3.ganges.58.png": "58", 
+            "../../pictures/TR3/tr3.ganges.100.png": "100", 
+            "../../pictures/TR3/tr3.hallows.21.png": "21", 
+            "../../pictures/TR3/tr3.jungle.83.png": "83", 
+            "../../pictures/TR3/tr3.jungle.103.png": "103", 
+            "../../pictures/TR3/tr3.kaliya.13.png": "13",
+            "../../pictures/TR3/tr3.kaliya.17.png": "17", 
+            "../../pictures/TR3/tr3.luds.35.png": "35", 
+            "../../pictures/TR3/tr3.luds.37.png": "37", 
+            "../../pictures/TR3/tr3.luds.74.png": "74", 
+            "../../pictures/TR3/tr3.madubu.53.png": "53", 
+            "../../pictures/TR3/tr3.madubu.143.png": "143", 
+            "../../pictures/TR3/tr3.nevada.113.png": "113", 
+            "../../pictures/TR3/tr3.nevada.143.png": "143", 
+            "../../pictures/TR3/tr3.puna.0.png": "0", 
+            "../../pictures/TR3/tr3.rx.163.png": "163", 
+            "../../pictures/TR3/tr3.rx.178.png": "178", 
+            "../../pictures/TR3/tr3.temple.48.png": "48", 
+            "../../pictures/TR3/tr3.temple.181.png": "181", 
+            "../../pictures/TR3/tr3.thames.1.png": "1", 
+            "../../pictures/TR3/tr3.thames.13.png": "13", 
+            "../../pictures/TR3/tr3.thames.130.png": "130", 
+            "../../pictures/TR3/tr3.tinnos.15.png": "15", 
+            "../../pictures/TR3/tr3.tinnos.43.png": "43", 
+            "../../pictures/TR3/tr3.tinnos.67.png": "67", 
+            "../../pictures/TR3/tr3.tinnos.101.png": "101",
+             // more pictures added same way, picture name with file type in first "", expected answer in second "",
+            };
+
+            var totalCorrect = 0;
+
+            var riddles = document.getElementsByClassName("riddle");
+            for (var i = 0; i < riddles.length; i++) {
+                var image = riddles[i].querySelector("img");
+                var input = riddles[i].querySelector("input");
+                var imageName = image.getAttribute("src");
+                var playerAnswer = input.value.toLowerCase();
+
+                if (correctAnswers[imageName]) {
+                    var correctAnswer = correctAnswers[imageName];
+
+                // check for mistake
+                if (isCloseEnough(playerAnswer, correctAnswer)) {
+                    totalCorrect++;
+                } else {
+                    wrongAnswers[playerAnswer] = correctAnswer; // store the correct answer as the value
+                    }
+                }
+            }
+
+            var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers (/42): </font color></font size></b>" + totalCorrect;
+            if (Object.keys(wrongAnswers).length > 0) {
+                resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
+                for (var playerAnswer in wrongAnswers) {
+                resultMessage += "<br>" + playerAnswer;
+                }
+            }
+
+            document.getElementById("result").innerHTML = resultMessage;
+        }
+
+        function fillWrongAnswers() {
+            var riddles = document.getElementsByClassName("riddle");
+            for (var i = 0; i < riddles.length; i++) {
+                var input = riddles[i].querySelector("input");
+                var playerAnswer = input.value.toLowerCase();
+
+                if (playerAnswer in wrongAnswers) {
+                    input.value = wrongAnswers[playerAnswer];
+                }
+            }
+        }
+        
+        // check if there's a mistake and how close it has to be
+        function isCloseEnough(str1, str2) {
+            var maxErrors = 0; // amount of max possible mistakes
+            var errors = 0;
+            
+            for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
+                if (str1[i] !== str2[i]) {
+                    errors++;
+                    if (errors > maxErrors) {
+                        return false;
+                    }
+                }
+            }
+            
+            // in case of different length of strings
+            errors += Math.abs(str1.length - str2.length);
+            
+            return errors <= maxErrors;
+        }
+    </script>
+</body>
+</html>

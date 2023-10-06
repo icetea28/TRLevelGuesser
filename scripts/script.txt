@@ -1,0 +1,96 @@
+<script>
+        var imageFileNames = ["pictures/FeelsStrongMan.jpg", "pictures/croc.png", "pictures/bri.png"]; // Füge weitere Dateinamen hinzu
+        
+        // Funktion zum Mischen der Array-Elemente in zufälliger Reihenfolge
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        
+        shuffleArray(imageFileNames);
+        
+        var riddlesContainer = document.getElementById("riddles-container");
+        
+        // Erstelle Bilder und Eingabefelder in zufälliger Reihenfolge
+        for (var i = 0; i < imageFileNames.length; i++) {
+            var riddleDiv = document.createElement("div");
+            riddleDiv.classList.add("riddle");
+            
+            var img = document.createElement("img");
+            img.src = imageFileNames[i];
+            img.alt = "Picture " + (i + 1);
+            
+            var input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Enter Levelname:";
+            
+            riddleDiv.appendChild(img);
+            riddleDiv.appendChild(input);
+            
+            riddlesContainer.appendChild(riddleDiv);
+        }
+        
+        function checkAnswers() {
+    var correctAnswers = {
+        "pictures/FeelsStrongMan.jpg": "level 1",
+        "pictures/croc.png": "level 2",
+        "pictures/bri.png": "level 3" // Füge weitere korrekte Antworten hinzu
+    };
+    
+    var totalCorrect = 0;
+    var wrongAnswers = {}; // Hier speichern wir die falschen Antworten
+    
+    var riddles = document.getElementsByClassName("riddle");
+    for (var i = 0; i < riddles.length; i++) {
+        var image = riddles[i].querySelector("img");
+        var input = riddles[i].querySelector("input");
+        var imageName = image.getAttribute("src");
+        var playerAnswer = input.value.toLowerCase();
+        
+        if (correctAnswers[imageName]) {
+            var correctAnswer = correctAnswers[imageName];
+            
+            // Überprüfe, ob die eingegebene Antwort oder die korrekte Antwort ein Zeichenfehler hat
+            if (isCloseEnough(playerAnswer, correctAnswer)) {
+                totalCorrect++;
+            } else {
+                wrongAnswers[playerAnswer] = playerAnswer; // Füge falsche Antwort zur Liste hinzu
+            }
+        }
+    }
+    
+    var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: </font color></font size></b>" + totalCorrect;
+    if (Object.keys(wrongAnswers).length > 0) {
+        resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
+        for (var playerAnswer in wrongAnswers) {
+            resultMessage += "<br>" + playerAnswer;
+        }
+    }
+    
+    document.getElementById("result").innerHTML = resultMessage;
+}
+        
+        // Hilfsfunktion zur Überprüfung, ob zwei Strings nah genug beieinander liegen
+        function isCloseEnough(str1, str2) {
+            var maxErrors = 2; // Anzahl der erlaubten Zeichenfehler
+            var errors = 0;
+            
+            for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
+                if (str1[i] !== str2[i]) {
+                    errors++;
+                    if (errors > maxErrors) {
+                        return false;
+                    }
+                }
+            }
+            
+            // Berücksichtige den Fall, wenn die Längen der Strings unterschiedlich sind
+            errors += Math.abs(str1.length - str2.length);
+            
+            return errors <= maxErrors;
+        }
+    </script>
