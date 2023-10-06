@@ -74,8 +74,6 @@ function addImagesToPage(imageEntries) {
 
         const imageElem = document.createElement('img');
         imageElem.src = riddleData.folder + imageEntry.source;
-        imageElem.alt = 'Riddle picture';
-        imageElem.title = imageEntry.hint;
 
         const inputElem = document.createElement('input');
         inputElem.type = 'text';
