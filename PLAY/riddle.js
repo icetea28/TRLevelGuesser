@@ -106,9 +106,6 @@ function fillWrongAnswers() {
     for (let i = 0; i < riddles.length; i++) {
         const input = riddles[i].querySelector('input');
         const playerAnswer = input.value.toLowerCase().trim();
-        if (!playerAnswer) {
-            continue; // Don't fill empty fields
-        }
 
         const img = riddles[i].querySelector('img');
         const correctAnswer = getAnswerForImageUrl(img.src);
