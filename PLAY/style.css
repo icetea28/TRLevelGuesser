@@ -51,11 +51,11 @@ input.answer {
     height: 40px;
     margin-left: 10px;
 }
-.correct-answer {
-    background-color: #8ce598;
+input.correct-answer {
+    background-color: #8ce598 !important;
 }
-.wrong-answer {
-    background-color: #f4a19a;
+input.wrong-answer {
+    background-color: #f4a19a !important;
 }
 
 button.clue-button {
