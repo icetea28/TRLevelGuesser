@@ -1,21 +1,21 @@
 Tomb Raider 3:
-Jungle
-Temple Ruins
-The River Ganges
-Caves of Kaliya
-Nevada Desert
-High Security Compound
-Area 51
-Coastal Village
-Crash Site
-Madubu Gorge
-Temple of Puna
-Thames Wharf
-Aldwych
-Lud's Gate
-City
-Antarctica
-RX-Tech Mines
-Lost City of Tinnos
-Meteorite Cavern
-All Hallows
+Jungle - JUNGLE
+Temple Ruins - TEMPLE
+The River Ganges - QUADCHAS
+Caves of Kaliya - TONYBOSS
+Nevada Desert - NEVADA
+High Security Compound - COMPOUND
+Area 51 - AREA51
+Coastal Village - SHORE
+Crash Site - CRASH
+Madubu Gorge - RAPIDS
+Temple of Puna - TRIBOSS
+Thames Wharf - ROOFS
+Aldwych - SEWER
+Lud's Gate - TOWER
+City - OFFICE
+Antarctica - ANTARC
+RX-Tech Mines - MINES
+Lost City of Tinnos - CITY
+Meteorite Cavern - CHAMBER
+All Hallows - STPAUL
