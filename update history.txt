@@ -1,0 +1,16 @@
+v0.1
+https://drive.google.com/file/d/1HwY9FkvbTtXuaxRYv-1HPKth4dVTsXS_/view?usp=drive_link
+- 46 pictures available (TR3 Only)
+- Guess the Level Game mode (TR3 Only)
+- Guess the Room Game mode (TR3 Only)
+- Random 10 Picture limit
+
+v0.1.1
+https://drive.google.com/file/d/1kw3aa5mA8HkC08haZNMX5NT171gVA2Tc/view?usp=drive_link
+- Fixed wrong answers not disappearing after correcting them and checking again
+- Pictures without a guess are listed as "Blank" in the mistake list now
+
+v0.1.2
+- Added this document
+- Added "Beta version" in the title and script of the Gamemodes
+- Player can choose amount of pictures

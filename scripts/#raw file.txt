@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TOMB RAIDER LEVEL GUESSER</title>
+    <title>TOMB RAIDER LEVEL GUESSER (BETA)</title>
 </head>
 <body>
     <h1><font size=10><font color=#B404AE>TOMB RAIDER LEVEL GUESSER</font size></font color></h1>
+    <br><font size=2>Beta v0.1.2</font size>
+        <p></p>
+        <button id="change-amount-button" onclick="startGame()">Change amount of pictures (10)</button>
     <p></p>
     <h2><b><font size="5">Rules and Information:</font></b></h2>
     <p><font size="4"> - Enter the name of the level in the box next to each picture
@@ -28,6 +31,7 @@
     <div id="result"></div>
     
     <script>
+        var selectedImages = [];
         var imageFileNames = ["", ""]; // enter file name with the file type e.g. pictures/egg.jpg
         var selectedImageIndices = [];
         while (selectedImageIndices.length < 10) {
@@ -63,11 +67,22 @@
         
         var wrongAnswers = {}; // declare outside functions
         
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+
         function checkAnswers() {
+        // Clear the wrongAnswers object before checking answers
+             wrongAnswers = {};
+    
             var correctAnswers = {
-            "": "", 
+            "": "",
              // more pictures added same way, picture name with file type in first "", expected answer in second "",
             };
+
+            var totalCorrect = 0;
 
             var totalCorrect = 0;
 
@@ -78,23 +93,28 @@
                 var imageName = image.getAttribute("src");
                 var playerAnswer = input.value.toLowerCase();
 
+                // If input is not empty or just spaces
+                if (playerAnswer.trim() === "") {
+                    playerAnswer = "Blank";
+                    }
+
                 if (correctAnswers[imageName]) {
                     var correctAnswer = correctAnswers[imageName];
 
-                // check for mistake
-                if (isCloseEnough(playerAnswer, correctAnswer)) {
-                    totalCorrect++;
-                } else {
-                    wrongAnswers[playerAnswer] = correctAnswer; // store the correct answer as the value
+                    // check for mistake
+                    if (isCloseEnough(playerAnswer, correctAnswer)) {
+                        totalCorrect++;
+                    } else {
+                        wrongAnswers[playerAnswer] = correctAnswer; // store the correct answer as the value
                     }
                 }
             }
-
-            var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers (/10): </font color></font size></b>" + totalCorrect ;
+            var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
+            var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
             if (Object.keys(wrongAnswers).length > 0) {
                 resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
                 for (var playerAnswer in wrongAnswers) {
-                resultMessage += "<br>" + playerAnswer;
+                    resultMessage += "<br>" + playerAnswer;
                 }
             }
 
@@ -131,6 +151,55 @@
             errors += Math.abs(str1.length - str2.length);
             
             return errors <= maxErrors;
+        }
+        
+        var numberOfSelectedImages = 0;
+
+        function startGame() {
+            numberOfSelectedImages = parseInt(prompt("Enter the number of images you want to guess (up to 10):"));
+
+            if (isNaN(numberOfSelectedImages) || numberOfSelectedImages <= 0 || numberOfSelectedImages > 10) {
+                alert("Please enter a valid number between 1 and 10.");
+                return;
+                }
+
+            updateButtonText();
+
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                }
+            }
+
+            // Clear the riddles container before adding new images
+            var riddlesContainer = document.getElementById("riddles-container");
+            riddlesContainer.innerHTML = "";
+
+            // Load images dynamically
+            selectedImageIndices.forEach(function(index) {
+                var riddleDiv = document.createElement("div");
+                riddleDiv.classList.add("riddle");
+
+                var img = document.createElement("img");
+                img.src = imageFileNames[index];
+                img.alt = "Picture " + (index + 1);
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.style = "width: 300px; height: 40px";
+                input.placeholder = "Enter Levelname:";
+
+                riddleDiv.appendChild(img);
+                riddleDiv.appendChild(input);
+
+                riddlesContainer.appendChild(riddleDiv);
+                riddlesContainer.appendChild(document.createElement("br"));
+            });
+
+            // Reset result message
+            document.getElementById("result").innerHTML = "";
         }
     </script>
 </body>

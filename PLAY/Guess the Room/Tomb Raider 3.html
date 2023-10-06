@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TOMB RAIDER ROOM GUESSER</title>
+    <title>TOMB RAIDER ROOM GUESSER (BETA)</title>
 </head>
 <body>
     <h1><font size=10><font color=#B404AE>TOMB RAIDER ROOM GUESSER</font size></font color></h1>
+    <br><font size=2>Beta v0.1.2</font size>
+        <p></p>
+        <button id="change-amount-button" onclick="startGame()">Change amount of pictures (10)</button>
     <p></p>
     <h2><b><font size="5">Rules and Information:</font></b></h2>
     <p><font size="4"> - Enter the number of the room in the box next to each picture
@@ -26,6 +29,7 @@
     <div id="result"></div>
     
     <script>
+        var selectedImages = [];
         var imageFileNames = ["../../pictures/TR3/tr3.aldwych.1.png", "../../pictures/TR3/tr3.aldwych.37.png", "../../pictures/TR3/tr3.aldwych.55.png", "../../pictures/TR3/tr3.antarc.29.png", "../../pictures/TR3/tr3.antarc.57.png", "../../pictures/TR3/tr3.antarc.93.png", 
         "../../pictures/TR3/tr3.antarc.126.png", "../../pictures/TR3/tr3.area51.18.png", "../../pictures/TR3/tr3.area51.96.png", "../../pictures/TR3/tr3.cavern.5.png", "../../pictures/TR3/tr3.cavern.12.png", "../../pictures/TR3/tr3.cavern.27.png", 
         "../../pictures/TR3/tr3.city.13.png", "../../pictures/TR3/tr3.coastal.121.png", "../../pictures/TR3/tr3.crash.29.png", "../../pictures/TR3/tr3.crash.72.png", "../../pictures/TR3/tr3.ganges.58.png", 
@@ -68,6 +72,12 @@
         
         var wrongAnswers = {}; // declare outside functions
         
+        function updateButtonText() {
+            var buttonText = "Change amount of pictures (" + numberOfSelectedImages + ")";
+            var button = document.getElementById("change-amount-button");
+            button.textContent = buttonText;
+        }
+
         function checkAnswers() {
         // Clear the wrongAnswers object before checking answers
              wrongAnswers = {};
@@ -145,8 +155,8 @@
                     }
                 }
             }
-
-            var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers (/10): </font color></font size></b>" + totalCorrect;
+            var totalCorrectRatio = totalCorrect / numberOfSelectedImages; // Verwende die neue Variable
+            var resultMessage = "<font size=5><b><font color=#01DF01>Total Correct Answers: " + totalCorrect + "/" + numberOfSelectedImages + "</font color></font size></b>";
             if (Object.keys(wrongAnswers).length > 0) {
                 resultMessage += "<p></p><br><font size=5><b><font color=#FF0000>Your mistakes:</font color></font size></b>";
                 for (var playerAnswer in wrongAnswers) {
@@ -171,7 +181,7 @@
         
         // check if there's a mistake and how close it has to be
         function isCloseEnough(str1, str2) {
-            var maxErrors = 0; // amount of max possible mistakes
+            var maxErrors = 2; // amount of max possible mistakes
             var errors = 0;
             
             for (var i = 0; i < Math.min(str1.length, str2.length); i++) {
@@ -187,6 +197,55 @@
             errors += Math.abs(str1.length - str2.length);
             
             return errors <= maxErrors;
+        }
+        
+        var numberOfSelectedImages = 0;
+
+        function startGame() {
+            numberOfSelectedImages = parseInt(prompt("Enter the number of images you want to guess (up to 10):"));
+
+            if (isNaN(numberOfSelectedImages) || numberOfSelectedImages <= 0 || numberOfSelectedImages > 10) {
+                alert("Please enter a valid number between 1 and 10.");
+                return;
+                }
+
+            updateButtonText();
+
+            var selectedImageIndices = [];
+            while (selectedImageIndices.length < numberOfSelectedImages) {
+                var randomIndex = Math.floor(Math.random() * imageFileNames.length);
+                if (!selectedImageIndices.includes(randomIndex)) {
+                    selectedImageIndices.push(randomIndex);
+                }
+            }
+
+            // Clear the riddles container before adding new images
+            var riddlesContainer = document.getElementById("riddles-container");
+            riddlesContainer.innerHTML = "";
+
+            // Load images dynamically
+            selectedImageIndices.forEach(function(index) {
+                var riddleDiv = document.createElement("div");
+                riddleDiv.classList.add("riddle");
+
+                var img = document.createElement("img");
+                img.src = imageFileNames[index];
+                img.alt = "Picture " + (index + 1);
+
+                var input = document.createElement("input");
+                input.type = "text";
+                input.style = "width: 300px; height: 40px";
+                input.placeholder = "Enter Levelname:";
+
+                riddleDiv.appendChild(img);
+                riddleDiv.appendChild(input);
+
+                riddlesContainer.appendChild(riddleDiv);
+                riddlesContainer.appendChild(document.createElement("br"));
+            });
+
+            // Reset result message
+            document.getElementById("result").innerHTML = "";
         }
     </script>
 </body>
