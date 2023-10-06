@@ -1,3 +1,23 @@
+Tomb Raider 2:
+The Great Wall - WALL
+Venice - BOAT
+Bartoli's Hideout - venice
+Opera House - OPERA 
+Offshore Rig - RIG 
+Diving Area - platform
+40 Fathoms - unwater
+Wreck of the Maria Doria - keel
+Living Quarters - living
+The Deck - deck 
+Tibetan Foothills - SKIDOO
+Barkhang Monastery - MONASTRY
+Catacombs of the Talion - catacomb 
+Ice Palace - icecave
+Temple of Xian - Emprtomb
+Floating Islands - FLOATING
+Dragon's Lair - xian
+Home Sweet Home not included
+
 Tomb Raider 3:
 Jungle - JUNGLE
 Temple Ruins - TEMPLE
