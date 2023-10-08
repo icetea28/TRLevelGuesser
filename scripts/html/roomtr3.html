@@ -3,14 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>TOMB RAIDER ROOM GUESSER</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
     <h1>TOMB RAIDER 3 ROOM GUESSER</h1>
 
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
-    <button id="return" class="return-button" onclick="window.location.href = '../TR Guesser.html'">Back to Game Selection</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../TR Guesser.html'">Back to Game Selection</button>
 
 
     <h2>Rules and Information:</h2>
@@ -33,7 +33,7 @@
     <script>
         const riddleData = {
             type: 'ROOM',
-            folder: '../pictures/TR3/',
+            folder: '../../pictures/TR3/',
 
             images: {
                 "tr3.aldwych.1d.png": { solution: "1", hint: "a crystal can be found in this room" },
@@ -99,7 +99,7 @@
             }
         };
     </script>
-    <script src="guesser.js"></script>
-    <script src="switchstyle.js"></script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
 </body>
 </html>

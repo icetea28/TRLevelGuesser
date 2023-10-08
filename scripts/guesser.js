@@ -1,5 +1,5 @@
 function returnToMenu() {
-    window.location.href = "../TR Guesser.html";
+    window.location.href = "../../TR Guesser.html";
 }
 
 function checkAnswers() {

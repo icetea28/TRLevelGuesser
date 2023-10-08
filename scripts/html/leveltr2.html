@@ -3,14 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>TOMB RAIDER LEVEL GUESSER</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
     <h1>TOMB RAIDER 2 LEVEL GUESSER</h1> 
 
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
-    <button id="return" class="return-button" onclick="window.location.href = '../TR Guesser.html'">Back to Game Selection</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../TR Guesser.html'">Back to Game Selection</button>
 
 
     <h2>Rules and Information:</h2>
@@ -52,7 +52,7 @@
                 "Wreck of the Maria Doria",
             ],
 
-            folder: '../pictures/TR2/',
+            folder: '../../pictures/TR2/',
             images: {
                 "tr2.bark.10m.png": { solution: "barkhang monastery", hint: "don't disturb the monks!" },
                 "tr2.bark.39m.png": { solution: "barkhang monastery", hint: "pay attention or you might die to a spindle" },
@@ -179,7 +179,7 @@
             }
         };
     </script>
-    <script src="guesser.js"></script>
-    <script src="switchstyle.js"></script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
 </body>
 </html>
