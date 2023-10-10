@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
-    <h1>TOMB RAIDER 1 ROOM GUESSER</h1>
+    <h1>TOMB RAIDER 5 ROOM GUESSER</h1>
 
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
@@ -25,10 +25,10 @@
         <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
     </div>
 
+    <div id="result"></div>
+
     <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
     <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
-
-    <div id="result"></div>
 
     <script>
         const riddleData = {
@@ -36,7 +36,18 @@
             folder: '../../pictures/TR5/',
 
             images: {
-
+                "tr5.streets.51m.png": { solution: "51", hint: "Still not past the tutorial?" },
+                "tr5.streets.93e.png": { solution: "93", hint: "It's nice to chill at the highest floor and look from above"},
+                "tr5.streets.111d.png": { solution: "111", hint: "You can see it from below, but you won't touch it"},
+                "tr5.streets.157d.png": { solution: "157", hint: "...you nearly died to this and now you need a hint"},
+                "tr5.streets.215m.png": { solution: "215", hint: "Past the tutorial by now?"},
+                "tr5.markets.62d.png": { solution: "62", hint: "no time to look at this while running from the rats"},
+                "tr5.markets.80m.png": { solution: "80", hint: "this is really not that rough since there's so much glass above"},
+                "tr5.markets.149e.png": { solution: "149", hint: "second time, but now it's closed"},
+                "tr5.markets.194m.png": { solution: "194", hint: "last moment to chill, now it's getting difficult"},
+                "tr5.colosseum.22m.png": { solution: "22", hint: "easy to miss even though the stressful part comes after"},
+                "tr5.colosseum.64d.png": { solution: "64", hint: "surprising there is no dead body down here"},
+                "tr5.colosseum.120d.png": { solution: "120", hint: "shouldn't have put all focus on the flower below"},
             }
         };
     </script>

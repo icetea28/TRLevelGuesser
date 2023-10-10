@@ -25,11 +25,12 @@
         <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
     </div>
 
+    <div id="result"></div>
+    
     <br>
     <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
     <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
 
-    <div id="result"></div>
 
     <script>
         const riddleData = {
@@ -52,7 +53,19 @@
 
             folder: '../../pictures/TR5/',
             images: {
-
+                "tr5.streets.51m.png": { solution: "streets of rome", hint: "Still not past the tutorial?" },
+                "tr5.streets.93e.png": { solution: "streets of rome", hint: "It's nice to chill at the highest floor and look from above"},
+                "tr5.streets.111d.png": { solution: "streets of rome", hint: "You can see it from below, but you won't touch it"},
+                "tr5.streets.157d.png": { solution: "streets of rome", hint: "...you nearly died to this and now you need a hint"},
+                "tr5.streets.215m.png": { solution: "streets of rome", hint: "Past the tutorial by now?"},
+                "tr5.markets.62d.png": { solution: "trajan's markets", hint: "no time to look at this while running from the rats"},
+                "tr5.markets.80m.png": { solution: "trajan's markets", hint: "this is really not that rough since there's so much glass above"},
+                "tr5.markets.149e.png": { solution: "trajan's markets", hint: "second time, but now it's closed"},
+                "tr5.markets.194m.png": { solution: "trajan's markets", hint: "last moment to chill, now it's getting difficult"},
+                "tr5.colosseum.22m.png": { solution: "the colosseum", hint: "easy to miss even though the stressful part comes after"},
+                "tr5.colosseum.64d.png": { solution: "the colosseum", hint: "surprising there is no dead body down here"},
+                "tr5.colosseum.120d.png": { solution: "the colosseum", hint: "shouldn't have put all focus on the flower below"},
+                "tr5.colosseum.e.png": { solution: "the colosseum", hint: "signs of the warrior"},
             }
         };
     </script>
