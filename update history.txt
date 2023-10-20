@@ -1,6 +1,7 @@
 v0.5
 - Added TR5 Pictures
 - Added TR1 Pictures
+- Added Difficulty Selection
 - Renamed main menu file
 
 v0.4.1

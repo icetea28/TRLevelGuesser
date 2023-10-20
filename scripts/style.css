@@ -144,3 +144,38 @@ button.fill-wrong-answers {
     margin: 10px;
 }
 
+.confirm-button {
+    background-color: #86ff8a;
+    border: 0.5mm ridge #000;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* Style for the mode dropdown */
+#mode {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the game dropdown */
+#game {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the difficulty dropdown */
+#difficulty {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
