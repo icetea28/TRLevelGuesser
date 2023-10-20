@@ -35,28 +35,42 @@
     <h1><font size=7>Tomb Raider Guesser - Game Selection</font></h1>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
     <p class="version">Beta v0.5.0</p>
+
     <table>
         <tr>
-            <th><b><font color=green><font size=5>Guess the Level:</font></b></th>
-            <th><b><font color=green><font size=5>Guess the Room:</font></b></th>
+            <th><b><font color=green><font size=5>Game Mode:</font></b></th>
+            <th><b><font color=green><font size=5>Game:</font></b></th>
+            <th><b><font color=green><font size=5>Difficulty:</b></th>
         </tr>
         <tr>
-            <td><font size=3><a href="scripts/html/leveltr1.html">Tomb Raider 1</a></td></font>
-            <td><font size=3><a href="scripts/html/roomtr1.html">Tomb Raider 1</a></td></font>
-        </tr>
-        <tr>
-            <td><font size=3><a href="scripts/html/leveltr2.html">Tomb Raider 2</a></td></font>
-            <td><font size=3><a href="scripts/html/roomtr2.html">Tomb Raider 2</a></td></font>
-        </tr>
-        <tr>
-            <td><font size=3><a href="scripts/html/leveltr3.html">Tomb Raider 3</a></td></font>
-            <td><font size=3><a href="scripts/html/roomtr3.html">Tomb Raider 3</a></td></font>
-        </tr>
-        <tr>
-            <td><font size=3><a href="scripts/html/leveltr5.html">Tomb Raider 5</a></td></font>
-            <td><font size=3><a href="scripts/html/roomtr5.html">Tomb Raider 5</a></td></font>
+            <td>
+                <select id="mode">
+                    <option value="Le">Guess the Level</option>
+                    <option value="Ro">Guess the Room</option>
+                </select>
+            </td>
+            <td>
+                <select id="game">
+                    <option value="1">Tomb Raider 1</option>
+                    <option value="2">Tomb Raider 2</option>
+                    <option value="3">Tomb Raider 3</option>
+                    <option value="4">Tomb Raider 4</option>
+                    <option value="5">Tomb Raider 5</option>
+                </select>
+            </td>
+            <td>
+                <select id="difficulty">
+                    <option value="ra">Random</option>
+                    <option value="ea">Easy</option>
+                    <option value="me">Medium</option>
+                    <option value="di">Difficult</option>
+                </select>
+            </td>
         </tr>
     </table>
+    
+    <button onclick="confirmChoice()">PLAY</button>
+
 <p><font size=3><li>Thank you very much for playing TR Guesser. If you notice some bugs, feel free to message me on discord.</li>
     <li>Hope you enjoy the Game</li>
     <li>Greetings, icetea <img src="pictures/EZ.png"></li>
@@ -71,5 +85,6 @@
 </div>
 </body>
 <script src="scripts/switchstyle.js"></script>
+<script src="scripts/mainpage.js"></script>
 <link rel="stylesheet" type="text/css" href="scripts/style.css" />
 </html>
