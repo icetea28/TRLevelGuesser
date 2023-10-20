@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TOMB RAIDER ROOM GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+    <h1>TOMB RAIDER 2 ROOM GUESSER</h1>
+    <h2>Difficulty: Medium</h2>
+    
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
+    <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../PLAY - TR Guesser.html'">Back to Game Selection</button>
+
+
+    <h2>Rules and Information:</h2>
+    <ul class="rules">
+        <li>Enter the number of the room in the box next to each picture</li>
+        <li>Use TRView and click into the room that is shown - at the top left is the number of the room</li>
+        <li>You can reveal the solution for pictures you can't solve at the end</li>
+        <li>If you're unsure about a level name in TRView, open levelnames.txt in the main folder and look for the ingame-levelname</li>
+    </ul>
+
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+
+    <div id="result"></div>
+
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+
+    <script>
+        const riddleData = {
+            type: 'ROOM',
+            folder: '../../pictures/TR2/',
+
+            images: {
+                "tr2.living.30m.png": { solution: "30", hint: "a secret is nearby" },
+                "tr2.fathom.5m.png": { solution: "5", hint: "a part of a room with width and length of ~100 blocks" },
+                "tr2.bartoli.131m.png": { solution: "131", hint: "hopefully the balcony won't fall apart from the explosion" },
+                "tr2.bark.10m.png": { solution: "10", hint: "don't disturb the monks!" },
+                "tr2.bark.39m.png": { solution: "39", hint: "pay attention or you might die to a spindle" },
+                "tr2.catac.42m.png": { solution: "42", hint: "is that actually a ladder?" },
+                "tr2.catac.97m.png": { solution: "97", hint: "if you fall off the platform you'll land in water" },
+                "tr2.float.66m.png": { solution: "66", hint: "this is not easily accessable, but it's possible to stand here" },
+                "tr2.float.88m.png": { solution: "88", hint: "jump off and you'll land on a slope" },
+                "tr2.ice.13m.png": { solution: "13", hint: "you can only look into this room from the outside" },
+                "tr2.lair.3m.png": { solution: "3", hint: "there is an enemy in the middle of the blocks which isn't shown in the picture" },
+                "tr2.living.38m.png": { solution: "38", hint: "seems like you didn't do the jump to skip this part of the level" },
+                "tr2.maria.49m.png": { solution: "49", hint: "chairs on the ceiling... the ship must have flipped" },
+                "tr2.maria.80m.png": { solution: "80", hint: "Why don't you take some time to look down instead and attempt killing the shark you find there" },
+                "tr2.xian.35m2.png": { solution: "35", hint: "the lever raises platforms" },
+                "tr2.rig.55m.png": { solution: "55", hint: "you got the keycard, now lets head out to the next level" },
+                "tr2.wall.37m.png": { solution: "37", hint: "No clue available for this image. I must have forgotten it FeelsBadMan" },
+                "tr2.wall.75m.png": { solution: "75", hint: "grab the flares here if it's too dark for you..." },
+                "tr2.xian.151m.png": { solution: "151", hint: "the key which can be picked here is removed" },
+
+                // Bianca
+                "tr2.wreck.56m.png": { solution: "56", hint: "Balcony? Stairs? Yes, I’m right there." },
+                "tr2.wreck.49m.png": { solution: "49", hint: "What I was now I’m not, a new view, now on top." },
+                "tr2.wall.38m2.png": { solution: "38", hint: "Looking for a clue? You’ve found one! A-ha!" },
+                "tr2.wall.83m.png": { solution: "83", hint: "follow me, and you’ll find something gold shining." },
+                "tr2.wall.38m1.png": { solution: "38", hint: "Looking for a clue? You’ve found one! A-ha!" },
+                "tr2.monastery.108m.png": { solution: "108", hint: "Four lights will guide you here." },
+                "tr2.catacombs.63m.png": { solution: "63", hint: "It’s all white, as you can see, it’s not so hard to spot me." },
+                "tr2.bartoli.70m1.png": { solution: "70", hint: "Mobsters too like chilling and fruit." },
+                "tr2.wall.65m.png": { solution: "65", hint: "“With a clue on my keyring!”" },
+                "tr2.venice.88m.png": { solution: "88", hint: "Find the antenna for a better signal." },
+                "tr2.venice.129m.png": { solution: "129", hint: "Did you hear that? Are the bells ringing?" },
+                "tr2.bartoli.110m.png": { solution: "110", hint: "Congratulations! You didn’t get cut!" },
+                "tr2.bartoli.135m.png": { solution: "135", hint: "Want to go to the Opera? You have to slide first." },
+                "tr2.bartoli.163m.png": { solution: "163", hint: "Wanna hide somewhere? Here, a jump and you’re in." },
+                "tr2.opera.123m.png": { solution: "123", hint: "A nice place to storage." },
+                "tr2.rig.11m.png": { solution: "11", hint: "In front of me not bird’s wings you’ll see, but wings indeed." },
+                "tr2.diving.48m.png": { solution: "48", hint: "Don’t be deceived, green is death, so be aware and jump with care." },
+                "tr2.diving.75m.png": { solution: "75", hint: "Take your time, this will be a long climb." },
+                "tr2.wreck.71m.png": { solution: "71", hint: "I used to help, now I’m not free, forever trapped in the deepest sea." },
+                "tr2.wreck.51m.png": { solution: "51", hint: "Take a coffee or take a tea, take a seat and look at me." },
+                "tr2.living.15m.png": { solution: "15", hint: "Beware of what lurks in the shadows." },
+                "tr2.deck.83m.png": { solution: "83", hint: "If you are lost you must begin, the search for what could spin." },
+                "tr2.foothills.137m.png": { solution: "137", hint: "Time to catJAM!" },
+                "tr2.monastery.99m.png": { solution: "99", hint: "If you want to find inner peace, you must go around me. " },
+                "tr2.catacombs.11m.png": { solution: "11", hint: "There’s four of us." },
+                "tr2.icecave.126m.png": { solution: "126", hint: "Be aware of what ice hides, someone big to kill will try." },
+                "tr2.xian.35m.png": { solution: "35", hint: "Hot and red, you don’t want to fall, if you made it here you didn’t burn. " },
+                "tr2.xian.43m.png": { solution: "43", hint: "Don’t be scared, we can’t kill; we guard here while standing still." },
+                "tr2.xian.62m.png": { solution: "62", hint: "If you are looking for some aid, find eyes and horns as green as jade." },
+                "tr2.floating.135m1.png": { solution: "135", hint: "A cage in the green." },
+                "tr2.floating.135m2.png": { solution: "135", hint: "A cage in the green." },
+                "tr2.floating.123m.png": { solution: "123", hint: "Here it is, your last step, if you want to be in his nest." },
+                "tr2.dragon.18m1.png": { solution: "18", hint: "It will make your eyes open wide; all you want to do will be to hide." },
+                "tr2.dragon.18m2.png": { solution: "18", hint: "Once a man, now no more." },
+                "tr2.opera.53m.png": { solution: "53", hint: "It’s show time!" },
+            }
+        };
+    </script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
+</body>
+</html>

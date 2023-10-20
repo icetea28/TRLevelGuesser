@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TOMB RAIDER LEVEL GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+    <h1>TOMB RAIDER 3 LEVEL GUESSER</h1>
+    <h2>Difficulty: Difficult</h2>
+    
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
+    <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../PLAY - TR Guesser.html'">Back to Game Selection</button>
+
+
+    <h2>Rules and Information:</h2>
+    <ul class="rules">
+        <li>Enter the name of the level in the box next to each picture</li>
+        <li>Capitalization is not considered</li>
+        <li>You can reveal the solution for pictures you can't solve at the end</li>
+    </ul>
+
+
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+
+    <div id="result"></div>
+
+    <br>
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+
+    <script>
+        const riddleData = {
+            type: 'LEVEL',
+            levels: [
+                "Aldwych",
+                "All Hallows",
+                "Antarctica",
+                "Area 51",
+                "Caves of Kaliya",
+                "City",
+                "Coastal Village",
+                "Crash Site",
+                "High Security Compound",
+                "Jungle",
+                "Lud's Gate",
+                "Madubu Gorge",
+                "Meteorite Cavern",
+                "Nevada Desert",
+                "RX-Tech Mines",
+                "Temple of Puna",
+                "Temple Ruins",
+                "The River Ganges",
+                "Thames Wharf",
+                "Lost City of Tinnos",
+            ],
+
+            folder: '../../pictures/TR3/',
+            images: {
+                "tr3.aldwych.1d.png": { solution: "aldwych", hint: "a crystal can be found in this room" },
+                "tr3.antarc.51d.png": { solution: "antarctica", hint: "Lara keep missing shots, as usual" },
+                "tr3.antarc.93d.png": { solution: "antarctica", hint: "here you find an item you can use multiple times even though you need it only once" },
+                "tr3.cavern.27d.png": { solution: "meteorite cavern", hint: "Lara has all the artifacts in her backpack" },
+                "tr3.city.19d.png": { solution: "city", hint: "There's electricity in the air here!" },
+                "tr3.ganges.26d.png": { solution: "the river ganges", hint: "I won't tell you, it's a secret!" },
+                "tr3.ganges.58d.png": { solution: "the river ganges", hint: "don't run to the left or you may not see this place again" },
+                "tr3.ganges.100d.png": { solution: "the river ganges", hint: "pick up a key here for the alternative route that you chose" },
+                "tr3.hallows.25d.png": { solution: "all hallows", hint: "The very last room" },
+                "tr3.hallowsd.png": { solution: "all hallows", hint: "you entered here at the top, how did you miss that cross?" },
+                "tr3.hsc.49.46d.png": { solution: "high security compound", hint: "open the doors to your mates and they might help you with this" },
+                "tr3.hsc.78d.png": { solution: "high security compound", hint: "Lara can't reach this room" },
+                "tr3.jungle.103d.png": { solution: "jungle", hint: "only if you actually play dev-intended here" },
+                "tr3.luds.74d.png": { solution: "lud's gate", hint: "time to breathe!" },
+                "tr3.madubu.53d.png": { solution: "madubu gorge", hint: "hidden behind a bridge" },
+                "tr3.madubu.143d.png": { solution: "madubu gorge", hint: "i hope you have a driving licence when you enter this" },
+                "tr3.rx.178d.png": { solution: "rx-tech mines", hint: "usually you drive past that place - or die right here" },
+                "tr3.tinnos.43d.png": { solution: "lost city of tinnos", hint: "the top of a large bridge" },
+                "tr3.tinnos.67d.png": { solution: "lost city of tinnos", hint: "No clue available for this image. I must have forgotten it FeelsBadMan" },
+            }
+        };
+    </script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
+</body>
+</html>

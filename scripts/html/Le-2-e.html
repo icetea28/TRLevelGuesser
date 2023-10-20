@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TOMB RAIDER LEVEL GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+    <h1>TOMB RAIDER 2 LEVEL GUESSER</h1> 
+    <h2>Difficulty: Easy</h2>
+    
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
+    <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../PLAY - TR Guesser.html'">Back to Game Selection</button>
+
+
+    <h2>Rules and Information:</h2>
+    <ul class="rules">
+        <li>Enter the name of the level in the box next to each picture</li>
+        <li>Capitalization is not considered</li>
+        <li>You can reveal the solution for pictures you can't solve at the end</li>
+    </ul>
+
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+    
+    <div id="result"></div>
+
+    <br>
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+
+    <script>
+        const riddleData = {
+            type: 'LEVEL',
+            levels: [
+                "40 Fathoms",
+                "Barkhang Monastery",
+                "Bartoli's Hideout",
+                "Catacombs of the Talion",
+                "Diving Area",
+                "Floating Islands",
+                "Ice Palace",
+                "Living Quarters",
+                "Offshore Rig",
+                "Opera House",
+                "Temple of Xian",
+                "The Deck",
+                "The Dragon's Lair",
+                "The Great Wall",
+                "Tibetan Foothills",
+                "Venice",
+                "Wreck of the Maria Doria",
+            ],
+
+            folder: '../../pictures/TR2/',
+            images: {
+                "tr2.opera.111e.png": { solution: "opera house", hint: "don't die in the fans!" },
+                "tr2.xian.17e.png": { solution: "temple of xian", hint: "you can't reach this side of the room.." },
+                "tr2.maria.11e.png": { solution: "wreck of the maria doria", hint: "Do you smell that? It smells like a secret... must be somewhere around here.." },
+                "tr2.fathom.40e.png": { solution: "40 fathoms", hint: "the ground is shaking in here if you pull some lever" },
+                "tr2.diving.46e.png": { solution: "diving area", hint: "you'll see this area when you fail a jump and fall into the water" },
+                "tr2.deck.108e.png": { solution: "the deck", hint: "a tiny room at the bottom of a huge room" },
+                "tr2.deck.99e.png": { solution: "the deck", hint: "you will miss this area if you don't play dev-intended" },
+                "tr2.bark.55e.png": { solution: "barkhang monastery", hint: "Believe in yourself, you don't need a clue for this KEKWait" },
+                "tr2.bartoli.106e.png": { solution: "bartoli's hideout", hint: "don't drive against those with your boat" },
+                "tr2.deck.63e.png": { solution: "the deck", hint: "No clue available for this image. I must have forgotten it FeelsBadMan" },
+                "tr2.diving.48e.png": { solution: "diving area", hint: "don't slide too far or you may fall into......" },
+                "tr2.venice.139e.png": { solution: "venice", hint: "the canal is right below you" },
+                "tr2.opera.104e.png": { solution: "opera house", hint: "Last thing Lara sees before she gets knocked out" },
+                "tr2.tibet.15e.png": { solution: "tibetan foothills", hint: "the two owners will try to defend them as you get close" },
+                "tr2.xian.115e.png": { solution: "temple of xian", hint: "congrats, you didn't die to the knives if you made it here" },
+                "tr2.xian.138e.png": { solution: "temple of xian", hint: "The summoning-ball of Arachnophobia" },
+                "tr2.ice.107e.png": { solution: "ice palace", hint: "you probably missed the bridge if you find yourself here" },
+                "tr2.maria.76e.png": { solution: "wreck of the maria doria", hint: "you could spend some time trying to kill the shark below you" },
+                "tr2.rig.19e.png": { solution: "offshore rig", hint: "grab the automatics and fight for your win" },
+                "tr2.tibet.67e.png": { solution: "tibetan foothills", hint: "No clue available for this image. I must have forgotten it FeelsBadMan" },
+                "tr2.tibet.55e.png": { solution: "tibetan foothills", hint: "if you wouldn't speed through this area you could recognize it now" },
+                "tr2.venice.0e.png": { solution: "venice", hint: "way too early in the level so you might miss it in your playthrough" },
+                "tr2.xian.92e.png": { solution: "temple of xian", hint: "you enter the room right below this" },
+
+                // Bianca
+                "tr2.wall.61e.png": { solution: "the great wall", hint: "Extinction was a lie…" },
+                "tr2.bartoli.70e4.png": { solution: "bartoli's hideout", hint: "Mobsters too like chilling and fruit." },
+                "tr2.opera.4e.png": { solution: "opera house", hint: "There are three of us and all we do, is watch a box swinging through." },
+                "tr2.opera.108e.png": { solution: "opera house", hint: "Use the chair carefully if you don’t like to be flattened." },
+                "tr2.opera.105e2.png": { solution: "opera house", hint: "Do you really need a clue?" },
+                "tr2.rig.50e.png": { solution: "offshore rig", hint: "A breath of fresh air." },
+                "tr2.wreck.76e.png": { solution: "wreck of the maria doria", hint: "Once here blue you used to find, now look at me for blue of a different kind." },
+                "tr2.living.27e.png": { solution: "living quarters", hint: "Careful, these edges are not as sharp as the glass ahead." },
+                "tr2.monastery.10e.png": { solution: "barkhang monastery", hint: "Should I tell you a lil secret? Here it lies a key item." },
+                "tr2.catacombs.2e.png": { solution: "catacombs of the talion", hint: "Here you know that you can find, something for your own disguise." },
+                "tr2.icecave.107e.png": { solution: "ice palace", hint: "This clue is golden." },
+                "tr2.icecave.34e1.png": { solution: "ice palace", hint: "Five of us but it’s just me, that alone is meant to be. " },
+                "tr2.xian.19e.png": { solution: "temple of xian", hint: "Here it was what everyone was looking for." },
+                "tr2.floating.29e.png": { solution: "floating islands", hint: "Six eyes are guarding." },
+                "tr2.floating.45e.png": { solution: "floating islands", hint: "Only when you’ve found two keys, you’ll get a chance to look at me." },
+                "tr2.wall.42e.png": { solution: "the great wall", hint: "Not even six legs are enough to reach it." },
+            }
+        };
+    </script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
+</body>
+</html>

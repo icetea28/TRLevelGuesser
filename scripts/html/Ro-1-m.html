@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
-    <h1>TOMB RAIDER 4 ROOM GUESSER</h1>
-    <h2>Difficulty: Random</h2>
+    <h1>TOMB RAIDER 1 ROOM GUESSER</h1>
+    <h2>Difficulty: Medium</h2>
     
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
@@ -34,10 +34,13 @@
     <script>
         const riddleData = {
             type: 'ROOM',
-            folder: '../../pictures/TR4/',
+            folder: '../../pictures/TR1/',
 
             images: {
-
+                "tr1.caves.19m.png": { solution: "19", hint: "Beware Bear!"},
+                "tr1.qual.14m.png": { solution: "14", hint: "First or second time here?"},
+                "tr1.valley.24m.png": { solution: "24", hint: "The waterfall.... it isn't always there.."},
+                "tr1.vilcabamba.21m.png": { solution: "21", hint: ""},
             }
         };
     </script>

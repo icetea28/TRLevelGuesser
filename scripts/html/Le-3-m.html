@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TOMB RAIDER LEVEL GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+    <h1>TOMB RAIDER 3 LEVEL GUESSER</h1>
+    <h2>Difficulty: Medium</h2>
+    
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
+    <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../PLAY - TR Guesser.html'">Back to Game Selection</button>
+
+
+    <h2>Rules and Information:</h2>
+    <ul class="rules">
+        <li>Enter the name of the level in the box next to each picture</li>
+        <li>Capitalization is not considered</li>
+        <li>You can reveal the solution for pictures you can't solve at the end</li>
+    </ul>
+
+
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+
+    <div id="result"></div>
+
+    <br>
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+
+    <script>
+        const riddleData = {
+            type: 'LEVEL',
+            levels: [
+                "Aldwych",
+                "All Hallows",
+                "Antarctica",
+                "Area 51",
+                "Caves of Kaliya",
+                "City",
+                "Coastal Village",
+                "Crash Site",
+                "High Security Compound",
+                "Jungle",
+                "Lud's Gate",
+                "Madubu Gorge",
+                "Meteorite Cavern",
+                "Nevada Desert",
+                "RX-Tech Mines",
+                "Temple of Puna",
+                "Temple Ruins",
+                "The River Ganges",
+                "Thames Wharf",
+                "Lost City of Tinnos",
+            ],
+
+            folder: '../../pictures/TR3/',
+            images: {
+                "tr3.aldwych.37m.png": { solution: "aldwych", hint: "you need to pay here!" },
+                "tr3.aldwych.63m.png": { solution: "aldwych", hint: "This is a transport plan" },
+                "tr3.antarc.29m.png": { solution: "antarctica", hint: "don't get poisoned here!" },
+                "tr3.antarc.57m.png": { solution: "antarctica", hint: "this is a 'secret' entrance" },
+                "tr3.area51.31m.png": { solution: "area 51", hint: "Lara enjoyed the can" },
+                "tr3.area51.96m.png": { solution: "area 51", hint: "when you can see this texture the doors in the picture should be open" },
+                "tr3.cavern.27m.png": { solution: "meteorite cavern", hint: "don't stare at this window or you may get burned!" },
+                "tr3.coastal.188.18m.png": { solution: "coastal village", hint: "same area used twice, but is it the end of the first or the start of the second level?" },
+                "tr3.crash.65m.png": { solution: "crash site", hint: "Beware the piranhas" },
+                "tr3.kaliya.7m.png": { solution: "caves of kaliya", hint: "Boulder is probably not the worst threat here" },
+                "tr3.luds.35m.png": { solution: "lud's gate", hint: "a wide painting in a gigantic room" },
+                "tr3.luds.154m.png": { solution: "lud's gate", hint: "Roasted" },
+                "tr3.ludsm.png": { solution: "lud's gate", hint: "watch your step, it's a long drop" },
+                "tr3.madubu.6m.png": { solution: "madubu gorge", hint: "Looks like coastal village, eg? But it's not!" },
+                "tr3.puna.13m.png": { solution: "temple of puna", hint: "There's a lot of deagle ammo here!" },
+                "tr3.rx.146m.png": { solution: "rx-tech mines", hint: "don't slide forwards" },
+                "tr3.thames.130m.png": { solution: "thames wharf", hint: "just a block away from the never-ending depth" },
+                "tr3.tinnos.0m.png": { solution: "lost city of tinnos", hint: "Could be the 5th mask" },
+                "tr3.tinnos.15m.png": { solution: "lost city of tinnos", hint: "Uli is watching you here" },
+            }
+        };
+    </script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
+</body>
+</html>

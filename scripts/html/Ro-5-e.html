@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
-    <h1>TOMB RAIDER 4 ROOM GUESSER</h1>
-    <h2>Difficulty: Random</h2>
+    <h1>TOMB RAIDER 5 ROOM GUESSER</h1>
+    <h2>Difficulty: Easy</h2>
     
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
@@ -34,10 +34,17 @@
     <script>
         const riddleData = {
             type: 'ROOM',
-            folder: '../../pictures/TR4/',
+            folder: '../../pictures/TR5/',
 
             images: {
-
+                "tr5.streets.93e.png": { solution: "93", hint: "It's nice to chill at the highest floor and look from above"},
+                "tr5.markets.149e.png": { solution: "149", hint: "second time, but now it's closed"},
+                "tr5.base.58e.png": { solution: "58", hint: "security area, you get your security pass card here too"},
+                "tr5.sink.61e.png": { solution: "61", hint: "Goodbye admiral"},
+                "tr5.sub.166e.png": { solution: "166", hint: "A Telephone in case you're about to go down"},
+                "tr5.tree.82e.png": { solution: "82", hint: "just use the rubber tube for the bike here"},
+                "tr5.lab.70e.png" : { solution: "70", hint: "running in circles..."},
+                "tr5.lab.169e.png": { solution: "169", hint: "Go in this to end the suffering"},
             }
         };
     </script>

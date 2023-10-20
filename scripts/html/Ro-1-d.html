@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 <body>
-    <h1>TOMB RAIDER 4 ROOM GUESSER</h1>
-    <h2>Difficulty: Random</h2>
+    <h1>TOMB RAIDER 1 ROOM GUESSER</h1>
+    <h2>Difficulty: Difficult</h2>
     
     <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
     <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
@@ -34,10 +34,11 @@
     <script>
         const riddleData = {
             type: 'ROOM',
-            folder: '../../pictures/TR4/',
+            folder: '../../pictures/TR1/',
 
             images: {
-
+                "tr1.caves.0d.png": { solution: "0", hint: "should've turned around and not just run away." },
+                "tr1.vilcabamba.33d.png": { solution: "33", hint: "You should look up as well"},
             }
         };
     </script>

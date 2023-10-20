@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TOMB RAIDER ROOM GUESSER</title>
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+    <h1>TOMB RAIDER 2 ROOM GUESSER</h1>
+    <h2>Difficulty: Difficult</h2>
+    
+    <button id="change-amount-button" class="change-amount-button" onclick="promptNewNumberOfImages()">Change number of pictures (10)</button>
+    <button id="mode-toggle" class="change-amount-button" onclick="switchDarkLightMode()">Switch light/dark mode</button>
+    <button id="return" class="return-button" onclick="window.location.href = '../../PLAY - TR Guesser.html'">Back to Game Selection</button>
+
+
+    <h2>Rules and Information:</h2>
+    <ul class="rules">
+        <li>Enter the number of the room in the box next to each picture</li>
+        <li>Use TRView and click into the room that is shown - at the top left is the number of the room</li>
+        <li>You can reveal the solution for pictures you can't solve at the end</li>
+        <li>If you're unsure about a level name in TRView, open levelnames.txt in the main folder and look for the ingame-levelname</li>
+    </ul>
+
+    <div id="riddles-container">
+        <!-- Bilder und Eingabefelder dynamisch hinzugefügt -->
+    </div>
+
+    <div id="result"></div>
+
+    <button class="check-answers" onclick="checkAnswers()">Check your answers</button>
+    <button class="fill-wrong-answers" onclick="fillWrongAnswers()">Fill wrong answers</button>
+
+    <script>
+        const riddleData = {
+            type: 'ROOM',
+            folder: '../../pictures/TR2/',
+
+            images: {
+                "tr2.float.157d.png": { solution: "157", hint: "even before the start" },
+                "tr2.ice.97d.png": { solution: "97", hint: "you see this room behind a window" },
+                "tr2.lair.21d.png": { solution: "21", hint: "don't die so close to the end!" },
+
+                // Bianca
+                "tr2.wreck.47d.png": { solution: "47", hint: "Here they lay, safe and sound, now I am the one on the ground." },
+                "tr2.rig.93d.png": { solution: "93", hint: "I can touch the sea and I can touch the sky." },
+                "tr2.opera.133d.png": { solution: "133", hint: "“Eros, have you fixed that rail yet?”" },
+                "tr2.opera.105d.png": { solution: "105", hint: "Need help? “Hang” in there." },
+                "tr2.opera.62d.png": { solution: "62", hint: "Sometimes the show is up." },
+                "tr2.opera.58d.png": { solution: "58", hint: "Act 2, scene 4." },
+                "tr2.monastery.8d.png": { solution: "8", hint: "Follow me, I’ll take you through, somewhere with a mighty view." },
+                "tr2.living.25d.png": { solution: "25", hint: "From the windows you will see blue caves of the deepest sea." },
+                "tr2.icecave.66d.png": { solution: "66", hint: "Here you went already once, but give the door a second glance." },
+                "tr2.floating.101d.png": { solution: "101", hint: "You can’t float, so here’s your clue: to not fall you walk it through." },
+                "tr2.fathoms.21d.png": { solution: "21", hint: "If you are looking for me, orange and blue it’s all you’ll see." },
+                "tr2.bartoli.70d2.png": { solution: "70", hint: "Mobsters too like chilling and fruit." },
+                "tr2.bartoli.70d3.png": { solution: "70", hint: "Mobsters too like chilling and fruit." },
+                "tr2.wreck.46d.png": { solution: "46", hint: "I’m not alone, I’m full of twins, and all we did was look all swim." },
+                "tr2.fathoms.49d.png": { solution: "49", hint: "Ventilation grids by my sides, but in front of me a lever hides." },
+                "tr2.deck.65d.png": { solution: "65", hint: "You made it this far and so it means: you took a jump and fell right here." },
+                "tr2.xian.14d.png": { solution: "14", hint: "From here you enter but be aware, cause more perils are ahead." },
+                "tr2.deck.15d.png": { solution: "15", hint: "If you are here you know it’s true that your health made it through." },
+                "tr2.catacombs.36d.png": { solution: "36", hint: "I’m not sure what you see, but something hot lies here." },
+                "tr2.icecave.34d2.png": { solution: "34", hint: "Five of us but it’s just me, that alone is meant to be. " },
+                "tr2.dragon.21d.png": { solution: "21", hint: "Run as fast as you can, you are now near the end" },
+            }
+        };
+    </script>
+    <script src="../guesser.js"></script>
+    <script src="../switchstyle.js"></script>
+</body>
+</html>
