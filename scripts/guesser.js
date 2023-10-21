@@ -57,7 +57,7 @@ function selectRiddleEntries(totalEntries, difficultySuffix) {
     const randomImageKeys = Object.keys(riddleData.images).sort(() => 0.5 - Math.random());
     const randomImages = [];
     const namePattern = difficultySuffix
-        ? new RegExp(difficultySuffix + '\\.\\w+$')
+        ? new RegExp(difficultySuffix + '\\d*\\.\\w+$')
         : null;
 
     for (const randomKey of randomImageKeys) {
