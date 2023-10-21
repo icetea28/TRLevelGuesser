@@ -62,8 +62,8 @@ function selectRiddleEntries(totalEntries, difficultySuffix) {
 
     for (const randomKey of randomImageKeys) {
         if (!namePattern || randomKey.match(namePattern)) {
-            randomImages.push(riddleData.images[randomKey]);
-            if (randomImages.length >= totalEntries) {
+            const newSize = randomImages.push(riddleData.images[randomKey]);
+            if (newSize >= totalEntries) {
                 return randomImages;
             }
         }
