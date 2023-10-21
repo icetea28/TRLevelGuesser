@@ -1,11 +1,6 @@
 body {
     font-family: Arial;
     font-size: 10pt;
-}
-
-body {
-    font-family: Arial;
-    font-size: 10pt;
     animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -54,6 +49,9 @@ h1 {
 }
 h2 {
     font-weight: bold;
+}
+#difficulty-title {
+    visibility: hidden; /* Will be unhidden with JS */
 }
 .rules {
     font-size: 12pt;
