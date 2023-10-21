@@ -53,12 +53,20 @@ function getAnswerForImageUrl(imageUrl) {
     return riddleData.images[imageName].solution;
 }
 
-function selectRiddleEntries(totalEntries) {
+function selectRiddleEntries(totalEntries, difficultySuffix) {
     const randomImageKeys = Object.keys(riddleData.images).sort(() => 0.5 - Math.random());
     const randomImages = [];
+    const namePattern = difficultySuffix
+        ? new RegExp(difficultySuffix + '\\d*\\.\\w+$')
+        : null;
 
-    for (let i = 0; i < totalEntries; ++i) {
-        randomImages.push(riddleData.images[randomImageKeys[i]]);
+    for (const randomKey of randomImageKeys) {
+        if (!namePattern || randomKey.match(namePattern)) {
+            const newSize = randomImages.push(riddleData.images[randomKey]);
+            if (newSize >= totalEntries) {
+                return randomImages;
+            }
+        }
     }
     return randomImages;
 }
@@ -151,9 +159,32 @@ function promptNewNumberOfImages() {
     }
 
     updateButtonText(newNumberOfImages);
-    const newImages = selectRiddleEntries(newNumberOfImages);
+    const difficulty = determineDifficulty();
+    const newImages = selectRiddleEntries(newNumberOfImages, difficulty.suffix);
     addImagesToPage(newImages);
     document.getElementById('result').innerHTML = '';
+}
+
+function determineDifficulty() {
+    const hash = window.location.hash;
+    switch (hash) {
+        case '#e':
+            return { suffix: 'e', text: 'Easy' };
+        case '#m':
+            return { suffix: 'm', text: 'Medium' };
+        case '#d':
+            return { suffix: 'd', text: 'Difficult' };
+        default:
+            return { suffix: null, text: 'Random' };
+    }
+}
+
+function showDifficultyTitle(text) {
+    const titleElement = document.getElementById('difficulty-title');
+    if (titleElement) {
+        titleElement.innerHTML = `Difficulty: ${text}`;
+        titleElement.style.visibility = 'visible';
+    }
 }
 
 function initializeQuiz() {
@@ -177,7 +208,11 @@ function initializeQuiz() {
         riddlesContainer.parentElement.appendChild(datalist);
     }
 
-    addImagesToPage(selectRiddleEntries(10));
+    // Determine difficulty and display it
+    const difficulty = determineDifficulty();
+    showDifficultyTitle(difficulty.text);
+
+    addImagesToPage(selectRiddleEntries(10, difficulty.suffix));
 }
 
 

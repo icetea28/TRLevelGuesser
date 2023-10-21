@@ -22,6 +22,6 @@ function confirmChoice() {
     localStorage.setItem('savedDifficulty', difficulty);
 
     // Construct the URL and redirect to the selected page
-    var url = "scripts/html/" + mode + "-" + game + "-" + difficulty + ".html";
+    var url = "scripts/html/" + mode + "-" + game + ".html#" + difficulty;
     window.location.href = url;
 }
