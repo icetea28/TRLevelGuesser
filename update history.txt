@@ -1,3 +1,6 @@
+v0.6
+- Added TR1 final Pictures
+
 v0.5
 - Added TR5 Pictures
 - Added TR1 Pictures
