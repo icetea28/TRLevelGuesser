@@ -1,3 +1,6 @@
+v
+- Changed order of levelnames to be like the order in the game, not in alphabetical order
+
 v0.6
 - Added TR1 final Pictures
 - Reduced filesize of all pictures (8-bit color depth)
